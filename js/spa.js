@@ -1,3 +1,4 @@
+import{updateNavbar} from "../ts/navbar.js"
 document.addEventListener('DOMContentLoaded', function () {
     const customRoute = (event) => {
         event = event || window.event;
@@ -9,7 +10,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const routes = {
         "/": "/pages/main.html",
         "/authorization": "/pages/authorization.html",
-        "/registration": "/pages/registration.html"
+        "/registration": "/pages/registration.html",
+        "/profile": "/pages/profile.html"
     };
 
     const handleLocation = async () => {
@@ -33,11 +35,22 @@ document.addEventListener('DOMContentLoaded', function () {
                             });
                     }
                 });
+                updateNavbar();
             } catch (error) {
                 console.error('Ошибка при загрузке файла:', error);
     
             }
         }
+        else{
+        try {
+            const response = await fetch(routes["/"]);
+            const html = await response.text();
+            document.getElementById("containerId").innerHTML = html;
+            updateNavbar();
+        } catch (error) {
+            console.error('Ошибка при загрузке файла:', error);
+        }
+    }
     };
 
     document.body.addEventListener('click', (event) => {

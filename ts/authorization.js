@@ -1,7 +1,6 @@
 "use strict";
-var _a;
 const requestAuthURL = "https://blog.kreosoft.space/api/account/login";
-(_a = document.getElementById('authorizationForm')) === null || _a === void 0 ? void 0 : _a.addEventListener('submit', function (event) {
+document.getElementById('authorizationForm')?.addEventListener('submit', function (event) {
     event.preventDefault();
     const emailInput = document.getElementById('email');
     const passwordInput = document.getElementById('password');
@@ -27,6 +26,7 @@ const requestAuthURL = "https://blog.kreosoft.space/api/account/login";
         .then(data => {
         localStorage.setItem('token', data.token);
         console.log('Авторизация успешна:', data);
+        window.location.href = "#/";
     })
         .catch(error => {
         console.error('Ошибка авторизации:', error.message);

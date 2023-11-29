@@ -1,12 +1,13 @@
-
-import { getProfile, ProfileData } from './getProfile'; 
+import { getProfile, ProfileData } from './getProfile.js'; 
 
 export async function updateNavbar(): Promise<void> {
     const unauthorizedNavbar = document.getElementById('unauthorizedNavbar');
     const authorizedNavbar = document.getElementById('authorizedNavbar');
     const userEmailElement = document.getElementById('userEmail');
 
-    if (!unauthorizedNavbar || !authorizedNavbar || !userEmailElement) {
+    console.log(unauthorizedNavbar);
+    console.log(authorizedNavbar);
+    if (!unauthorizedNavbar || !authorizedNavbar) {
         console.error('Один из элементов навбара не найден.');
         return;
     }

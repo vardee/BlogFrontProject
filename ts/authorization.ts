@@ -31,6 +31,7 @@ document.getElementById('authorizationForm')?.addEventListener('submit', functio
     .then(data => {
         localStorage.setItem('token', data.token);
         console.log('Авторизация успешна:', data);
+        window.location.href = "#/";
     })
     .catch(error => {
         console.error('Ошибка авторизации:', error.message);

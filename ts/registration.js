@@ -1,7 +1,6 @@
 "use strict";
-var _a;
 const requestRegisterURL = "https://blog.kreosoft.space/api/account/register";
-(_a = document.getElementById('registrationForm')) === null || _a === void 0 ? void 0 : _a.addEventListener('submit', function (event) {
+document.getElementById('registrationForm')?.addEventListener('submit', function (event) {
     event.preventDefault();
     const errorMessageElement = document.getElementById('error-message');
     if (!errorMessageElement) {
