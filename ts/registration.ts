@@ -40,6 +40,7 @@ const requestRegisterURL = "https://blog.kreosoft.space/api/account/register";
         .then(data => {
             localStorage.setItem('token', data.token);
             console.log('Регистрация успешна:', data);
+            window.location.href = "#/";
         })
         .catch(error => {
             console.error('Ошибка регистрации:', error.message);

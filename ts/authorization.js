@@ -2,6 +2,11 @@
 const requestAuthURL = "https://blog.kreosoft.space/api/account/login";
 document.getElementById('authorizationForm')?.addEventListener('submit', function (event) {
     event.preventDefault();
+    const errorMessageElement = document.getElementById('error-message');
+    if (!errorMessageElement) {
+        console.error('Error message element not found');
+        return;
+    }
     const emailInput = document.getElementById('email');
     const passwordInput = document.getElementById('password');
     const email = emailInput.value;
@@ -29,6 +34,8 @@ document.getElementById('authorizationForm')?.addEventListener('submit', functio
         window.location.href = "#/";
     })
         .catch(error => {
-        console.error('Ошибка авторизации:', error.message);
+        console.error('Ошибка регистрации:', error.message);
+        errorMessageElement.textContent = 'Ошибка регистрации: ' + error.message;
+        errorMessageElement.style.display = 'block';
     });
 });

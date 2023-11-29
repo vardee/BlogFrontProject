@@ -37,6 +37,7 @@ document.getElementById('registrationForm')?.addEventListener('submit', function
         .then(data => {
         localStorage.setItem('token', data.token);
         console.log('Регистрация успешна:', data);
+        window.location.href = "#/";
     })
         .catch(error => {
         console.error('Ошибка регистрации:', error.message);

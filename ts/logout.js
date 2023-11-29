@@ -23,6 +23,7 @@ document.getElementById('logout')?.addEventListener('click', function (event) {
         .then(data => {
         console.log('Пользователь успешно вышел:', data);
         localStorage.removeItem('token');
+        localStorage.clear();
         if (window.location.hash !== '#/authorization') {
             window.location.href = "#/";
             window.location.href = window.location.href.split('#')[0];
