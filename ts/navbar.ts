@@ -1,0 +1,32 @@
+
+import { getProfile, ProfileData } from './getProfile'; 
+
+export async function updateNavbar(): Promise<void> {
+    const unauthorizedNavbar = document.getElementById('unauthorizedNavbar');
+    const authorizedNavbar = document.getElementById('authorizedNavbar');
+    const userEmailElement = document.getElementById('userEmail');
+
+    if (!unauthorizedNavbar || !authorizedNavbar || !userEmailElement) {
+        console.error('Один из элементов навбара не найден.');
+        return;
+    }
+
+    const userEmail = userEmailElement as HTMLSpanElement;
+
+    const token = localStorage.getItem('token');
+
+    if (token) {
+        authorizedNavbar.style.display = 'block';
+        unauthorizedNavbar.style.display = 'none';
+
+        try {
+            const profileData: ProfileData = await getProfile();
+            userEmail.innerText = profileData.email as string;
+        } catch (error) {
+            console.error('Ошибка при получении профиля:', (error as Error).message);
+        }
+    } else {
+        authorizedNavbar.style.display = 'none';
+        unauthorizedNavbar.style.display = 'block';
+    }
+}
