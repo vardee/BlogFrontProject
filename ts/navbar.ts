@@ -11,7 +11,6 @@ export async function updateNavbar(): Promise<void> {
         console.error('Один из элементов навбара не найден.');
         return;
     }
-
     const userEmail = userEmailElement as HTMLSpanElement;
     const token = localStorage.getItem('token');
     if (token) {

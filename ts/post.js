@@ -55,24 +55,31 @@ document.getElementById('filterForm')?.addEventListener('submit', async function
         postsContainer.innerHTML = '';
         const postTemplate = document.getElementById('postTemplate');
         posts.forEach((post) => {
-            const postElement = document.importNode(postTemplate.content, true);
-            const titleElement = postElement.querySelector('.post-title');
-            const descriptionElement = postElement.querySelector('.post-description');
-            const authorElement = postElement.querySelector('.post-author');
-            const dateElement = postElement.querySelector('.post-date');
-            const imageElement = postElement.querySelector('.post-image');
-            const tagsElement = postElement.querySelector('.post-tags');
-            const readingTimeElement = postElement.querySelector('.post-reading-time');
-            const commentsElement = postElement.querySelector('.post-comments');
-            const likesElement = postElement.querySelector('.post-likes');
+            const newPost = document.importNode(postTemplate.content, true);
+            const postId = post.id;
+            const postElement = newPost.querySelector('.post');
+            const titleElement = newPost.querySelector('.post-title');
+            const descriptionElement = newPost.querySelector('.post-description');
+            const authorElement = newPost.querySelector('.post-author');
+            const dateElement = newPost.querySelector('.post-date');
+            const imageElement = newPost.querySelector('.post-image');
+            const tagsElement = newPost.querySelector('.post-tags');
+            const readingTimeElement = newPost.querySelector('.post-reading-time');
+            const commentsElement = newPost.querySelector('.post-comments');
+            const likesElement = newPost.querySelector('.post-likes');
             if (titleElement)
                 titleElement.textContent = post.title ?? '';
             if (descriptionElement)
                 descriptionElement.innerHTML = post.description ?? '';
             if (authorElement)
                 authorElement.textContent = post.author ?? '';
-            if (dateElement)
-                dateElement.textContent = post.date ?? '';
+            if (dateElement) {
+                const formattedDate = post.date ?? 'Некорректная дата';
+                dateElement.textContent = formattedDate;
+            }
+            if (postElement) {
+                postElement.dataset.postId = postId;
+            }
             if (imageElement) {
                 if (post.image) {
                     imageElement.src = post.image;
@@ -86,12 +93,17 @@ document.getElementById('filterForm')?.addEventListener('submit', async function
             if (tagsElement)
                 tagsElement.textContent = post.tags?.join(', ') ?? '';
             if (readingTimeElement)
-                readingTimeElement.textContent = `Время чтения: ${post.readingTime ?? ''}`;
+                readingTimeElement.textContent = `Время чтения: ${post.readingTime ?? ''} минут`;
             if (commentsElement)
                 commentsElement.textContent = post.comments ?? '';
             if (likesElement)
                 likesElement.textContent = post.likes ?? '';
-            postsContainer.appendChild(postElement);
+            const likeIconElement = newPost.querySelector(`.post[data-post-id="${postId}"] .like-icon`);
+            if (likeIconElement) {
+                console.log("asjidgiwaugdiuawuid");
+                likeIconElement.setAttribute('src', post.hasLike ? '../image/heartLiked.png' : '../image/heartUnliked.png');
+            }
+            postsContainer.appendChild(newPost);
         });
     }
     catch (error) {

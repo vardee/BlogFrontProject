@@ -10,7 +10,6 @@ document.getElementById('filterForm')?.addEventListener('submit', async function
     const onlyMyCommunities = (document.getElementById('onlyMyCommunities') as HTMLInputElement).checked;
     let page = (document.getElementById('page') as HTMLInputElement).value;
     let size = (document.getElementById('size') as HTMLInputElement).value;
-
     
     if (page.trim() === '') {
         page = '1';
@@ -57,23 +56,30 @@ document.getElementById('filterForm')?.addEventListener('submit', async function
 
         const postTemplate = document.getElementById('postTemplate') as HTMLTemplateElement;
 
-        posts.forEach((post: { title: string; description: string; author: string; date: string; image: string; tags: any[]; readingTime: any; comments: string; likes: string; }) => {
-            const postElement = document.importNode(postTemplate.content, true);
+        posts.forEach((post: { hasLike: boolean; id: string; title: string; description: string; author: string; date: string; image: string; tags: any[]; readingTime: any; comments: string; likes: string; }) => {
+            const newPost = document.importNode(postTemplate.content, true);
+            const postId = post.id;
+            const postElement = newPost.querySelector('.post') as HTMLElement;
             
-            const titleElement = postElement.querySelector('.post-title') as HTMLElement;
-            const descriptionElement = postElement.querySelector('.post-description') as HTMLElement;
-            const authorElement = postElement.querySelector('.post-author') as HTMLElement;
-            const dateElement = postElement.querySelector('.post-date') as HTMLElement;
-            const imageElement = postElement.querySelector('.post-image') as HTMLImageElement;
-            const tagsElement = postElement.querySelector('.post-tags') as HTMLElement;
-            const readingTimeElement = postElement.querySelector('.post-reading-time') as HTMLElement;
-            const commentsElement = postElement.querySelector('.post-comments') as HTMLElement;
-            const likesElement = postElement.querySelector('.post-likes') as HTMLElement;
-        
+            const titleElement = newPost.querySelector('.post-title') as HTMLElement;
+            const descriptionElement = newPost.querySelector('.post-description') as HTMLElement;
+            const authorElement = newPost.querySelector('.post-author') as HTMLElement;
+            const dateElement = newPost.querySelector('.post-date') as HTMLElement;
+            const imageElement = newPost.querySelector('.post-image') as HTMLImageElement;
+            const tagsElement = newPost.querySelector('.post-tags') as HTMLElement;
+            const readingTimeElement = newPost.querySelector('.post-reading-time') as HTMLElement;
+            const commentsElement = newPost.querySelector('.post-comments') as HTMLElement;
+            const likesElement = newPost.querySelector('.post-likes') as HTMLElement;
             if (titleElement) titleElement.textContent = post.title ?? '';
             if (descriptionElement) descriptionElement.innerHTML = post.description ?? '';
             if (authorElement) authorElement.textContent = post.author ?? '';
-            if (dateElement) dateElement.textContent = post.date ?? '';
+            if (dateElement) {
+                const formattedDate = post.date ?? 'Некорректная дата';
+                dateElement.textContent = formattedDate;
+            }
+            if (postElement) {
+                postElement.dataset.postId = postId;
+            }
             if (imageElement) {
                 if (post.image) {
                     imageElement.src = post.image;
@@ -84,13 +90,16 @@ document.getElementById('filterForm')?.addEventListener('submit', async function
                 }
             }
             if (tagsElement) tagsElement.textContent = post.tags?.join(', ') ?? '';
-            if (readingTimeElement) readingTimeElement.textContent = `Время чтения: ${post.readingTime ?? ''}`;
+            if (readingTimeElement) readingTimeElement.textContent = `Время чтения: ${post.readingTime ?? ''} минут`;
             if (commentsElement) commentsElement.textContent = post.comments ?? '';
             if (likesElement) likesElement.textContent = post.likes ?? '';
-        
-            postsContainer.appendChild(postElement);
+            const likeIconElement = newPost.querySelector(`.post[data-post-id="${postId}"] .like-icon`);
+            if (likeIconElement) {
+                console.log("asjidgiwaugdiuawuid")
+                likeIconElement.setAttribute('src', post.hasLike ? '../image/heartLiked.png' : '../image/heartUnliked.png');
+            }
+            postsContainer.appendChild(newPost);
         });
-        
         
     } catch (error) {
         console.error('Ошибка при выполнении GET-запроса:', (error as Error).message);
