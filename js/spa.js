@@ -1,47 +1,54 @@
-import{updateNavbar} from "../ts/navbar.js"
-document.addEventListener('DOMContentLoaded', function () {
-    const customRoute = (event) => {
-        event = event || window.event;
-        event.preventDefault();
-        window.history.replaceState({}, "", event.target.href);
-        handleLocation();
-    };
+import { updateNavbar } from "../ts/navbar.js";
 
-    const routes = {
-        "/": "/pages/main.html",
-        "/authorization": "/pages/authorization.html",
-        "/registration": "/pages/registration.html",
-        "/profile": "/pages/profile.html"
-    };
+const customRoute = (event) => {
+    event = event || window.event;
+    event.preventDefault();
+    window.history.replaceState({}, "", event.target.href);
+    handleLocation();
+    window.location.reload();
+};
 
-    const handleLocation = async () => {
-        const path = window.location.hash.substring(1);
-        const routePath = routes[path];
+const routes = {
+    "/": "/pages/main.html",
+    "/authorization": "/pages/authorization.html",
+    "/registration": "/pages/registration.html",
+    "/profile": "/pages/profile.html"
+};
+
+const handleLocation = async () => {
+    const path = window.location.hash.substring(1);
+    const routePath = routes[path];
+    const token = localStorage.getItem('token');
     
-        if (routePath) {
-            try {
-                const response = await fetch(routePath);
-                const html = await response.text();
-                document.getElementById("containerId").innerHTML = html;
-                const scriptTags = document.querySelectorAll('script[data-src]');
-                scriptTags.forEach(scriptTag => {
-                    const src = scriptTag.dataset.src;
-                    if (src) {
-                        import(src)
-                            .then(module => {
-                            })
-                            .catch(error => {
-                                console.error('Ошибка при загрузке скрипта:', error);
-                            });
-                    }
-                });
-                updateNavbar();
-            } catch (error) {
-                console.error('Ошибка при загрузке файла:', error);
-    
-            }
+    if (token && ((path === "/authorization") || (path === "/registration"))) {
+        window.location.hash = "#/";
+        window.location.reload();
+    }
+
+    if (routePath) {
+        try {
+            const response = await fetch(routePath);
+            const html = await response.text();
+            document.getElementById("containerId").innerHTML = html;
+
+            const scriptTags = document.querySelectorAll('script[data-src]');
+            scriptTags.forEach(scriptTag => {
+                const src = scriptTag.dataset.src;
+                if (src) {
+                    import(src)
+                        .then(module => {
+                        })
+                        .catch(error => {
+                            console.error('Ошибка при загрузке скрипта:', error);
+                        });
+                }
+            });
+
+            updateNavbar();
+        } catch (error) {
+            console.error('Ошибка при загрузке файла:', error);
         }
-        else{
+    } else {
         try {
             const response = await fetch(routes["/"]);
             const html = await response.text();
@@ -51,16 +58,31 @@ document.addEventListener('DOMContentLoaded', function () {
             console.error('Ошибка при загрузке файла:', error);
         }
     }
-    };
+};
 
-    document.body.addEventListener('click', (event) => {
-        const target = event.target;
-        if (target.tagName === 'A' && target.getAttribute('href').startsWith('#/')) {
-            customRoute(event);
-        }
-    });
+const handleClick = (event) => {
+    const target = event.target;
+    if (target.tagName === 'A' && target.getAttribute('href').startsWith('#/')) {
+        customRoute(event);
+    }
+};
 
-    window.onpopstate = handleLocation;
-    window.onload = handleLocation;
+document.body.addEventListener('click', handleClick);
+window.addEventListener('hashchange', handleLocation);
+
+window.addEventListener('DOMContentLoaded', function () {
     handleLocation();
 });
+
+// Сохраняем текущие обработчики событий
+const savedEventListeners = {
+    click: [document.body, handleClick],
+    hashchange: [window, handleLocation]
+};
+
+// Устанавливаем обработчики событий после перезагрузки страницы
+window.onload = () => {
+    for (const [element, listener] of Object.values(savedEventListeners)) {
+        element.addEventListener(listener[0], listener[1]);
+    }
+};

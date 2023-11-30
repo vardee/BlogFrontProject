@@ -1,23 +1,102 @@
-<div id="filterForPosts">
-    <label>Фильтр: </label>
-    <select id="postFilter">
-      <option value="all">Все посты</option>
-      <option value="category1">Категория 1</option>
-      <option value="category2">Категория 2</option>
-      <!-- Добавьте другие фильтры по необходимости -->
-    </select>
-    <button onclick="applyFilter()">Применить фильтр</button>
-  </div>
-  
-  <div id="posts">
-    <!-- Здесь будут отображаться посты -->
-  </div>
-  
-  <nav aria-label="Page navigation example">
-    <ul class="pagination justify-content-end" id="pagination">
-      <!-- Здесь будут отображаться страницы -->
-    </ul>
-  </nav>
-  
-  <footer></footer>
-  <script src="../js/spa.js" defer></script>
+<div class="container mt-5 justify-content-center">
+    <label id="filterLabel" class="fs-4 fw-bold mb-3 ">Фильтры</label>
+    <form class="row g-3 col-10 mx-auto border p-3 rounded" id="filterForm">
+      <div class="col-md-6 border p-3 rounded">
+          <label for="tags" class="form-label">Теги</label>
+          <input type="text" class="form-control border" id="tags" name="tags" placeholder="Введи тэги">
+      </div>
+      <div class="col-md-6 border p-3 rounded">
+          <label for="author" class="form-label ">Авторы</label>
+          <input type="text" class="form-control" id="author" name="author" placeholder="Введите имя автора">
+      </div>
+      <div class="col-md-6 border p-3 rounded">
+          <label for="minReadingTime" class="form-label">Мининимальное время чтения</label>
+          <input type="number" class="form-control" id="minReadingTime" name="minReadingTime"
+              placeholder="Введите минимальное время чтения">
+      </div>
+      <div class="col-md-6 border p-3 rounded">
+          <label for="maxReadingTime" class="form-label">Максимальное время чтения</label>
+          <input type="number" class="form-control" id="maxReadingTime" name="maxReadingTime"
+              placeholder="Введите максимальное время чтения">
+      </div>
+      <div class="col-md-4 border p-3 rounded">
+          <label for="sorting" class="form-label">Сортировка</label>
+          <select id="sorting" class="form-select" name="sorting" multiple>
+              <option value="CreateDesc">Время создания по убыванию</option>
+              <option value="CreateAsc">Время создания по возврастанию</option>
+              <option value="LikeAsc">По лайкам по возврастанию</option>
+              <option value="LikeDesc">По лайкам по убыванию</option>
+          </select>
+      </div>
+      <div class="col-md-4 border p-3 rounded">
+          <label class="form-check-label">Только мои группы</label>
+          <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="onlyMyCommunities" name="onlyMyCommunities">
+          </div>
+      </div>
+      <div class="col-md-2 border p-3 rounded">
+          <label for="page" class="form-label">Страница</label>
+          <input type="number" class="form-control" id="page" name="page" placeholder="Страница">
+      </div>
+      <div class="col-md-2 border p-3 rounded">
+          <label for="size" class="form-label">Количество постов</label>
+          <input type="number" class="form-control" id="size" name="size" placeholder="Количество">
+      </div>
+      <div class="col-12">
+          <button type="submit" class="btn btn-primary">Применить фильтры</button>
+      </div>
+  </form>
+</div>
+
+<template id="postTemplate">
+    <div class="post mt-5 mb-3 border p-3 rounded mx-auto col-md-8">
+        <div class="post-details row g-3">
+            <div class="col-md-12">
+                <p class="post-author-date">
+                    <span class="post-author"></span> - <span class="post-date"></span>
+                </p>
+                <h2 class="post-title"></h2>
+            </div>
+            <div class="col-md-12">
+                <div class="row g-3">
+                    <div class="col-md-4 text-center">
+                        <img class="post-image img-fluid rounded" src=" " alt="Post Image">
+                    </div>
+                    <div class="col-md-8">
+                        <p class="post-description text-wrap"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="post-tags"></div>
+            </div>
+            <div class="col-md-12">
+                <p class="post-reading-time"></p>
+            </div>
+            <div class="col-md-12">
+                <hr>
+            </div>
+            <div class="col-md-6">
+                <span class="post-comments"></span> Комментарии
+            </div>
+            <div class="col-md-6 text-right">
+                <span class="post-likes"></span> Лайки
+            </div>
+        </div>
+    </div>
+</template>
+
+<div id="posts" class="row g-3">
+</div>
+
+<nav aria-label="Page navigation example">
+  <ul class="pagination justify-content-end" id="pagination">
+  </ul>
+</nav>
+<footer></footer>
+<script data-src="../ts/post.js" defer></script>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
