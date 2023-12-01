@@ -1,10 +1,11 @@
 <div class="container mt-5 justify-content-center">
     <label id="filterLabel" class="fs-4 fw-bold mb-3 ">Фильтры</label>
     <form class="row g-3 col-10 mx-auto border p-3 rounded" id="filterForm">
-      <div class="col-md-6 border p-3 rounded">
-          <label for="tags" class="form-label">Теги</label>
-          <input type="text" class="form-control border" id="tags" name="tags" placeholder="Введи тэги">
-      </div>
+        <div class="col-md-4 border p-3 rounded">
+            <label for="tags" class="form-label">Тэги</label>
+            <select id="tagsElements" class="form-select" name="tags" multiple>
+            </select>
+        </div>
       <div class="col-md-6 border p-3 rounded">
           <label for="author" class="form-label ">Авторы</label>
           <input type="text" class="form-control" id="author" name="author" placeholder="Введите имя автора">
@@ -20,14 +21,15 @@
               placeholder="Введите максимальное время чтения">
       </div>
       <div class="col-md-4 border p-3 rounded">
-          <label for="sorting" class="form-label">Сортировка</label>
-          <select id="sorting" class="form-select" name="sorting" multiple>
-              <option value="CreateDesc">Время создания по убыванию</option>
-              <option value="CreateAsc">Время создания по возврастанию</option>
-              <option value="LikeAsc">По лайкам по возврастанию</option>
-              <option value="LikeDesc">По лайкам по убыванию</option>
-          </select>
-      </div>
+        <label for="sorting" class="form-label">Сортировка</label>
+        <select id="sorting" class="form-select" name="sorting">
+            <option value="CreateDesc">Время создания по убыванию</option>
+            <option value="CreateAsc">Время создания по возрастанию</option>
+            <option value="LikeAsc">По лайкам по возрастанию</option>
+            <option value="LikeDesc">По лайкам по убыванию</option>
+        </select>
+    </div>
+    
       <div class="col-md-4 border p-3 rounded">
           <label class="form-check-label">Только мои группы</label>
           <div class="form-check">
@@ -99,6 +101,8 @@
 <script data-src="../ts/doLikePost.js" defer></script>
 <script data-src="../ts/getPostInformation.js" defer></script>
 <script data-src="../ts/likePost.js" defer></script>
+<script data-src="../ts/tags.js" defer></script>
+<script data-src="../ts/tagsToDiv.js" defer></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>

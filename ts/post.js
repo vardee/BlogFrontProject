@@ -1,8 +1,7 @@
-"use strict";
 document.getElementById('filterForm')?.addEventListener('submit', async function (event) {
     console.log('Форма отправлена');
     event.preventDefault();
-    const tags = document.getElementById('tags').value;
+    const tags = Array.from(document.getElementById('tagsElements').selectedOptions).map(option => option.value);
     const author = document.getElementById('author').value;
     const minReadingTime = document.getElementById('minReadingTime').value;
     const maxReadingTime = document.getElementById('maxReadingTime').value;
@@ -10,6 +9,7 @@ document.getElementById('filterForm')?.addEventListener('submit', async function
     const onlyMyCommunities = document.getElementById('onlyMyCommunities').checked;
     let page = document.getElementById('page').value;
     let size = document.getElementById('size').value;
+    console.log(tags);
     if (page.trim() === '') {
         page = '1';
     }
@@ -17,8 +17,7 @@ document.getElementById('filterForm')?.addEventListener('submit', async function
         size = '5';
     }
     const params = new URLSearchParams();
-    if (tags.trim() !== '')
-        params.set('tags', tags);
+    tags.forEach(tag => params.append('tags', tag));
     if (author.trim() !== '')
         params.set('author', author);
     if (minReadingTime.trim() !== '')
@@ -34,6 +33,7 @@ document.getElementById('filterForm')?.addEventListener('submit', async function
     const apiUrl = 'https://blog.kreosoft.space/api/post';
     const url = new URL(apiUrl);
     const token = localStorage.getItem('token');
+    console.log(`${url.toString()}?${params.toString()}`);
     try {
         const response = await fetch(`${url.toString()}?${params.toString()}`, {
             method: 'GET',
@@ -90,12 +90,14 @@ document.getElementById('filterForm')?.addEventListener('submit', async function
                     imageElement.parentElement?.classList.add('d-none');
                 }
             }
-            if (tagsElement)
-                tagsElement.textContent = post.tags?.join(', ') ?? '';
+            if (tagsElement) {
+                const tagNames = post.tags?.map(tag => tag.name).join(', ') ?? '';
+                tagsElement.textContent = `Теги: ${tagNames}`;
+            }
             if (readingTimeElement)
                 readingTimeElement.textContent = `Время чтения: ${post.readingTime ?? ''} минут`;
             if (commentsElement)
-                commentsElement.textContent = post.comments ?? '';
+                commentsElement.textContent = post.commentsCount ?? 0;
             if (likesElement)
                 likesElement.textContent = post.likes ?? '';
             const likeIconElement = newPost.querySelector(`.post[data-post-id="${postId}"] .like-icon`);
@@ -110,3 +112,4 @@ document.getElementById('filterForm')?.addEventListener('submit', async function
         console.error('Ошибка при выполнении GET-запроса:', error.message);
     }
 });
+export {};

@@ -1,8 +1,9 @@
+import { getTags } from "./tags.js";
 document.getElementById('filterForm')?.addEventListener('submit', async function (event) {
     console.log('Форма отправлена');
     event.preventDefault();
 
-    const tags = (document.getElementById('tags') as HTMLInputElement).value;
+    const tags = Array.from((document.getElementById('tagsElements') as HTMLSelectElement).selectedOptions).map(option => option.value);
     const author = (document.getElementById('author') as HTMLInputElement).value;
     const minReadingTime = (document.getElementById('minReadingTime') as HTMLInputElement).value;
     const maxReadingTime = (document.getElementById('maxReadingTime') as HTMLInputElement).value;
@@ -10,7 +11,8 @@ document.getElementById('filterForm')?.addEventListener('submit', async function
     const onlyMyCommunities = (document.getElementById('onlyMyCommunities') as HTMLInputElement).checked;
     let page = (document.getElementById('page') as HTMLInputElement).value;
     let size = (document.getElementById('size') as HTMLInputElement).value;
-    
+
+    console.log(tags)
     if (page.trim() === '') {
         page = '1';
     }
@@ -19,7 +21,7 @@ document.getElementById('filterForm')?.addEventListener('submit', async function
     }
 
     const params = new URLSearchParams();
-    if (tags.trim() !== '') params.set('tags', tags);
+    tags.forEach(tag => params.append('tags', tag));
     if (author.trim() !== '') params.set('author', author);
     if (minReadingTime.trim() !== '') params.set('minReadingTime', minReadingTime);
     if (maxReadingTime.trim() !== '') params.set('maxReadingTime', maxReadingTime);
@@ -31,7 +33,7 @@ document.getElementById('filterForm')?.addEventListener('submit', async function
     const apiUrl = 'https://blog.kreosoft.space/api/post';
     const url = new URL(apiUrl);
     const token = localStorage.getItem('token');
-
+    console.log(`${url.toString()}?${params.toString()}`)
     try {
         const response = await fetch(`${url.toString()}?${params.toString()}`, {
             method: 'GET',
@@ -56,11 +58,10 @@ document.getElementById('filterForm')?.addEventListener('submit', async function
 
         const postTemplate = document.getElementById('postTemplate') as HTMLTemplateElement;
 
-        posts.forEach((post: { hasLike: boolean; id: string; title: string; description: string; author: string; date: string; image: string; tags: any[]; readingTime: any; comments: string; likes: string; }) => {
+        posts.forEach((post: { hasLike: boolean; id: string; title: string; description: string; author: string; date: string; image: string; tags: any[]; readingTime: any; commentsCount: any; likes: string; }) => {
             const newPost = document.importNode(postTemplate.content, true);
             const postId = post.id;
             const postElement = newPost.querySelector('.post') as HTMLElement;
-            
             const titleElement = newPost.querySelector('.post-title') as HTMLElement;
             const descriptionElement = newPost.querySelector('.post-description') as HTMLElement;
             const authorElement = newPost.querySelector('.post-author') as HTMLElement;
@@ -89,9 +90,12 @@ document.getElementById('filterForm')?.addEventListener('submit', async function
                     imageElement.parentElement?.classList.add('d-none');
                 }
             }
-            if (tagsElement) tagsElement.textContent = post.tags?.join(', ') ?? '';
+            if (tagsElement) {
+                const tagNames = post.tags?.map(tag => tag.name).join(', ') ?? '';
+                tagsElement.textContent = `Теги: ${tagNames}`;
+            }
             if (readingTimeElement) readingTimeElement.textContent = `Время чтения: ${post.readingTime ?? ''} минут`;
-            if (commentsElement) commentsElement.textContent = post.comments ?? '';
+            if (commentsElement) commentsElement.textContent = post.commentsCount ?? 0;
             if (likesElement) likesElement.textContent = post.likes ?? '';
             const likeIconElement = newPost.querySelector(`.post[data-post-id="${postId}"] .like-icon`);
             if (likeIconElement) {

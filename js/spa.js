@@ -1,4 +1,6 @@
 import { updateNavbar } from "../ts/navbar.js";
+import { addTagsToDiv } from '../ts/tagsToDiv.js';
+
 
 const customRoute = (event) => {
     event = event || window.event;
@@ -24,7 +26,9 @@ const handleLocation = async () => {
         window.location.hash = "#/";
         window.location.reload();
     }
-
+    if(path == "/"){
+        addTagsToDiv();
+    }
     if (routePath) {
         try {
             const response = await fetch(routePath);
@@ -74,13 +78,11 @@ window.addEventListener('DOMContentLoaded', function () {
     handleLocation();
 });
 
-// Сохраняем текущие обработчики событий
 const savedEventListeners = {
     click: [document.body, handleClick],
     hashchange: [window, handleLocation]
 };
 
-// Устанавливаем обработчики событий после перезагрузки страницы
 window.onload = () => {
     for (const [element, listener] of Object.values(savedEventListeners)) {
         element.addEventListener(listener[0], listener[1]);
