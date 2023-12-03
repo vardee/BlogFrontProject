@@ -1,10 +1,10 @@
+import { updateNavbar } from "../ts/navbar.js";
 const logoutURL = "https://blog.kreosoft.space/api/account/logout";
 
 document.getElementById('logout')?.addEventListener('click', function (event) {
     event.preventDefault();
     
     const token = localStorage.getItem('token');
-    
     if (!token) {
         console.error('Token not found in localStorage');
         return;
@@ -27,9 +27,9 @@ document.getElementById('logout')?.addEventListener('click', function (event) {
         console.log('Пользователь успешно вышел:', data);
         localStorage.removeItem('token');
         localStorage.clear();
-        if (window.location.hash !== '#/authorization') {
-            window.location.href = "#/";
-            window.location.href = window.location.href.split('#')[0];
+        if (window.location.href !== '/authorization') {
+            window.history.pushState({}, '', `/`);
+            updateNavbar();
         }
     })
     

@@ -1,4 +1,12 @@
-.like-icon {
-    width: 20px;
-    height: 20px;
-}
+#pagination {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #fff; 
+    z-index: 1000;
+  }
+  
+  body {
+    margin-bottom: 50px;
+  }
+  

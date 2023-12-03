@@ -1,3 +1,8 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
 <div class="container mt-5 justify-content-center">
     <label id="filterLabel" class="fs-4 fw-bold mb-3 ">Фильтры</label>
     <form class="row g-3 col-10 mx-auto border p-3 rounded" id="filterForm">
@@ -11,12 +16,12 @@
           <input type="text" class="form-control" id="author" name="author" placeholder="Введите имя автора">
       </div>
       <div class="col-md-6 border p-3 rounded">
-          <label for="minReadingTime" class="form-label">Мининимальное время чтения</label>
+          <label for="min" class="form-label">Мининимальное время чтения</label>
           <input type="number" class="form-control" id="minReadingTime" name="minReadingTime"
               placeholder="Введите минимальное время чтения">
       </div>
       <div class="col-md-6 border p-3 rounded">
-          <label for="maxReadingTime" class="form-label">Максимальное время чтения</label>
+          <label for="max" class="form-label">Максимальное время чтения</label>
           <input type="number" class="form-control" id="maxReadingTime" name="maxReadingTime"
               placeholder="Введите максимальное время чтения">
       </div>
@@ -37,10 +42,6 @@
           </div>
       </div>
       <div class="col-md-2 border p-3 rounded">
-          <label for="page" class="form-label">Страница</label>
-          <input type="number" class="form-control" id="page" name="page" placeholder="Страница">
-      </div>
-      <div class="col-md-2 border p-3 rounded">
           <label for="size" class="form-label">Количество постов</label>
           <input type="number" class="form-control" id="size" name="size" placeholder="Количество">
       </div>
@@ -57,7 +58,10 @@
                 <p class="post-author-date">
                     <span class="post-author"></span> - <span class="post-date"></span>
                 </p>
-                <h2 class="post-title"></h2>
+                <h2 class="post-title" href ="/post"><span><p></p></span></h2>
+            </div>
+            <div class="col-md-12">
+                <hr>
             </div>
             <div class="col-md-12">
                 <div class="row g-3">
@@ -65,7 +69,7 @@
                         <img class="post-image img-fluid rounded" src=" " alt="Post Image">
                     </div>
                     <div class="col-md-8">
-                        <span><p class="post-description text-wrap"></p></span>
+                        <p class="post-description text-wrap"><span></span></p>
                     </div>
                 </div>
             </div>
@@ -79,7 +83,8 @@
                 <hr>
             </div>
             <div class="col-md-6">
-                <span class="post-comments"></span> Комментарии
+                <span class="post-comments"></span>
+                <img id="commentIcon" class="comment-icon img-fluid" src="../image/chat-bubble.png" alt="Comment Icon" style="max-width: 20px; max-height: 20px;">
             </div>
             <div class="col-md-6 text-right">
                 <span class="post-likes"></span>
@@ -92,9 +97,22 @@
 <div id="posts" class="row g-3">
 </div>
 
-<nav aria-label="Page navigation example">
-  <ul class="pagination justify-content-end" id="pagination">
-  </ul>
+<nav aria-label="Page navigation example" class ="justify-content-center">
+    <ul class="pagination justify-content-end" id="pagination">
+      <li class="page-item">
+        <a class="page-link" href="#" aria-label="Previous">
+          <span aria-hidden="true">&laquo;</span>
+        </a>
+      </li>
+      <li class="page-item"><a class="page-link" href="#">1</a></li>
+      <li class="page-item"><a class="page-link" href="#">2</a></li>
+      <li class="page-item"><a class="page-link" href="#">3</a></li>
+      <li class="page-item">
+        <a class="page-link" href="#" aria-label="Next" data-page="2">
+            <span aria-hidden="true">&raquo;</span>
+        </a>
+    </li>
+</ul>
 </nav>
 <footer></footer>
 <script data-src="../ts/post.js" defer></script>

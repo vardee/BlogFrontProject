@@ -1,0 +1,42 @@
+<template id="postTemplate">
+    <div class="post mt-5 mb-3 border p-3 rounded mx-auto col-md-8" data-post-id="">
+        <div class="post-details row g-3">
+            <div class="col-md-12">
+                <p class="post-author-date">
+                    <span class="post-author"></span> - <span class="post-date"></span>
+                </p>
+                <h2 class="post-title"></h2>
+            </div>
+            <div class="col-md-12">
+                <hr>
+            </div>
+            <div class="col-md-12">
+                <div class="row g-3">
+                    <div class="col-md-4 text-center">
+                        <img class="post-image img-fluid rounded" src=" " alt="Post Image">
+                    </div>
+                    <div class="col-md-8">
+                        <span><p class="post-description text-wrap"></p></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="post-tags"></div>
+            </div>
+            <div class="col-md-12">
+                <p class="post-reading-time"></p>
+            </div>
+            <div class="col-md-12">
+                <hr>
+            </div>
+            <div class="col-md-6">
+                <span class="post-comments"></span>
+                <img id="commentIcon" class="comment-icon img-fluid" src="../image/chat-bubble.png" alt="Comment Icon" style="max-width: 20px; max-height: 20px;">
+            </div>
+            <div class="col-md-6 text-right">
+                <span class="post-likes"></span>
+                <img id="likeIcon" class="like-icon img-fluid" src="../image/heartUnliked.png" alt="Like Icon" style="max-width: 20px; max-height: 20px;">
+            </div>
+        </div>
+    </div>
+</template>

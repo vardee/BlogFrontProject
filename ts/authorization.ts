@@ -1,4 +1,4 @@
-
+import { updateNavbar } from "../ts/navbar.js";
 const requestAuthURL = "https://blog.kreosoft.space/api/account/login";
 
 document.getElementById('authorizationForm')?.addEventListener('submit', function (event) {
@@ -36,8 +36,10 @@ document.getElementById('authorizationForm')?.addEventListener('submit', functio
     .then(data => {
         localStorage.setItem('token', data.token);
         console.log('Авторизация успешна:', data);
-        window.location.href = "#/";
+        window.history.pushState({}, '', `/`);
+        updateNavbar();
     })
+    
     .catch(error => {
         console.error('Ошибка регистрации:', error.message);
         errorMessageElement.textContent = 'Ошибка регистрации: ' + error.message;
