@@ -40,3 +40,4 @@
     Header set Access-Control-Allow-Headers "Content-Type, Authorization"
     Header set Access-Control-Allow-Credentials "true"
 </IfModule>
+AddType application/javascript .mjs

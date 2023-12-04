@@ -1,4 +1,3 @@
-
 import { updateNavbar } from "../ts/navbar.js";
 import { addTagsToDiv } from '../ts/tagsToDiv.js';
 
@@ -14,27 +13,52 @@ const routes = {
     "/authorization": "/pages/authorization.html",
     "/registration": "/pages/registration.html",
     "/profile": "/pages/profile.html",
-    "/post": "/pages/pageWithPosts.html"
+    "/post/:id": "/pages/post.html",
+    "/post/create": "/pages/create.html"
 };
 
 const handleLocation = async (path = window.location.pathname) => {
-    const routePath = routes[path];
-    const token = localStorage.getItem('token');
+    let routePath = null;
     
+    for (const [route, routePage] of Object.entries(routes)) {
+        const routeParts = route.split("/").filter(part => part !== "");
+        const pathParts = path.split("/").filter(part => part !== "");
+
+        if (routeParts.length === pathParts.length) {
+            const params = {};
+
+            const isMatch = routeParts.every((part, index) => {
+                if (part.startsWith(":")) {
+                    const paramName = part.slice(1);
+                    params[paramName] = pathParts[index];
+                    return true;
+                }
+                return part === pathParts[index];
+            });
+
+            if (isMatch) {
+                routePath = routePage;
+                console.log("Matched route:", route, "with params:", params);
+                break;
+            }
+        }
+    }
+    
+    const token = localStorage.getItem('token');
+
     if (token && ((path === "/authorization") || (path === "/registration"))) {
-            window.history.pushState({}, '', `/`);
-        console.log("asdasdasdasd")
+        window.history.pushState({}, '', '/');
+        console.log("asdasdasdasd");
     }
 
     if (path === "/") {
         addTagsToDiv();
-        
     }
 
     if (routePath) {
         try {
             const response = await fetch(routePath);
-            
+
             if (!response.ok) {
                 throw new Error(`Ошибка загрузки страницы. Код ошибки: ${response.status}`);
             }
@@ -56,6 +80,7 @@ const handleLocation = async (path = window.location.pathname) => {
             });
 
             updateNavbar();
+
         } catch (error) {
             console.error('Ошибка при загрузке файла:', error.message);
         }
@@ -64,10 +89,12 @@ const handleLocation = async (path = window.location.pathname) => {
     }
 };
 
+
 const handleClick = (event) => {
     const target = event.target;
-    if (target.tagName === 'A' && target.getAttribute('href').startsWith('/')) {
-        customRoute(event, target.getAttribute('href'));
+    const href = target.getAttribute('href');
+    if (target.tagName === 'A' && href && href.startsWith('/')) {
+        customRoute(event, href);
     }
 };
 

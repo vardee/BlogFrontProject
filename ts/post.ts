@@ -74,7 +74,7 @@ const loadPosts = async () => {
 
         const postTemplate = document.getElementById('postTemplate') as HTMLTemplateElement;
 
-        posts.forEach((post: { hasLike: boolean; id: string; title: string; description: string; author: string; date: string; image: string; tags: any[]; readingTime: any; commentsCount: any; likes: string; }) => {
+        posts.forEach((post: { hasLike: boolean; id: string; title: string; description: string; author: string; createTime: string; image: string; tags: any[]; readingTime: any; commentsCount: any; likes: string; }) => {
             const newPost = document.importNode(postTemplate.content, true);
             const postId = post.id;
             const postElement = newPost.querySelector('.post') as HTMLElement;
@@ -87,12 +87,18 @@ const loadPosts = async () => {
             const readingTimeElement = newPost.querySelector('.post-reading-time') as HTMLElement;
             const commentsElement = newPost.querySelector('.post-comments') as HTMLElement;
             const likesElement = newPost.querySelector('.post-likes') as HTMLElement;
-
-            if (titleElement) titleElement.textContent = post.title ?? '';
+            
+            if (titleElement) {
+                titleElement.textContent = post.title ?? '';
+                const postLink = titleElement.closest('.post-link') as HTMLAnchorElement;
+                if (postLink) {
+                    postLink.href = `/post/${post.id}`;
+                }
+            }
             if (descriptionElement) descriptionElement.innerHTML = post.description ?? '';
             if (authorElement) authorElement.textContent = post.author ?? '';
             if (dateElement) {
-                const formattedDate = post.date ?? 'Некорректная дата';
+                const formattedDate = post.createTime ?? 'Некорректная дата';
                 dateElement.textContent = formattedDate;
             }
 
@@ -111,8 +117,8 @@ const loadPosts = async () => {
             }
 
             if (tagsElement) {
-                const tagNames = post.tags?.map(tag => tag.name).join(', ') ?? '';
-                tagsElement.textContent = `Теги: ${tagNames}`;
+                const tagNames = post.tags?.map(tag => tag.name).join(' ') ?? '';
+                tagsElement.textContent = `#${tagNames}`;
             }
 
             if (readingTimeElement) readingTimeElement.textContent = `Время чтения: ${post.readingTime ?? ''} минут`;

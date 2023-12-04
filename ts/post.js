@@ -72,14 +72,19 @@ const loadPosts = async () => {
             const readingTimeElement = newPost.querySelector('.post-reading-time');
             const commentsElement = newPost.querySelector('.post-comments');
             const likesElement = newPost.querySelector('.post-likes');
-            if (titleElement)
+            if (titleElement) {
                 titleElement.textContent = post.title ?? '';
+                const postLink = titleElement.closest('.post-link');
+                if (postLink) {
+                    postLink.href = `/post/${post.id}`;
+                }
+            }
             if (descriptionElement)
                 descriptionElement.innerHTML = post.description ?? '';
             if (authorElement)
                 authorElement.textContent = post.author ?? '';
             if (dateElement) {
-                const formattedDate = post.date ?? 'Некорректная дата';
+                const formattedDate = post.createTime ?? 'Некорректная дата';
                 dateElement.textContent = formattedDate;
             }
             if (postElement) {
@@ -96,8 +101,8 @@ const loadPosts = async () => {
                 }
             }
             if (tagsElement) {
-                const tagNames = post.tags?.map(tag => tag.name).join(', ') ?? '';
-                tagsElement.textContent = `Теги: ${tagNames}`;
+                const tagNames = post.tags?.map(tag => tag.name).join(' ') ?? '';
+                tagsElement.textContent = `#${tagNames}`;
             }
             if (readingTimeElement)
                 readingTimeElement.textContent = `Время чтения: ${post.readingTime ?? ''} минут`;

@@ -1,7 +1,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="../css/style.css">
 </head>
 <div class="container mt-5 justify-content-center">
     <label id="filterLabel" class="fs-4 fw-bold mb-3 ">Фильтры</label>
@@ -58,7 +58,7 @@
                 <p class="post-author-date">
                     <span class="post-author"></span> - <span class="post-date"></span>
                 </p>
-                <h2 class="post-title" href ="/post"><span><p></p></span></h2>
+                <a class="post-link"><h2 class="post-title"></h2></a>
             </div>
             <div class="col-md-12">
                 <hr>
@@ -84,7 +84,7 @@
             </div>
             <div class="col-md-6">
                 <span class="post-comments"></span>
-                <img id="commentIcon" class="comment-icon img-fluid" src="../image/chat-bubble.png" alt="Comment Icon" style="max-width: 20px; max-height: 20px;">
+                <img id="commentIcon" class="comment-icon img-fluid"  src="../image/chat-bubble.png" alt="Comment Icon" style="max-width: 20px; max-height: 20px;">
             </div>
             <div class="col-md-6 text-right">
                 <span class="post-likes"></span>
@@ -121,6 +121,7 @@
 <script data-src="../ts/likePost.js" defer></script>
 <script data-src="../ts/tags.js" defer></script>
 <script data-src="../ts/tagsToDiv.js" defer></script>
+<script data-src="../ts/postPage.js" defer></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>

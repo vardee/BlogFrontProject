@@ -31,7 +31,7 @@ document.getElementById('authorizationForm')?.addEventListener('submit', functio
         .then(data => {
         localStorage.setItem('token', data.token);
         console.log('Авторизация успешна:', data);
-        window.history.pushState({}, '', `/`);
+        window.location.href = ("/");
         updateNavbar();
     })
         .catch(error => {

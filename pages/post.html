@@ -1,11 +1,16 @@
-<template id="postTemplate">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="../css/style.css">
+</head>
+<template id="postExample">
     <div class="post mt-5 mb-3 border p-3 rounded mx-auto col-md-8" data-post-id="">
         <div class="post-details row g-3">
             <div class="col-md-12">
                 <p class="post-author-date">
                     <span class="post-author"></span> - <span class="post-date"></span>
                 </p>
-                <h2 class="post-title"></h2>
+                <a class="post-link"><h2 class="post-title"></h2></a>
             </div>
             <div class="col-md-12">
                 <hr>
@@ -16,7 +21,7 @@
                         <img class="post-image img-fluid rounded" src=" " alt="Post Image">
                     </div>
                     <div class="col-md-8">
-                        <span><p class="post-description text-wrap"></p></span>
+                        <p class="post-description text-wrap"><span></span></p>
                     </div>
                 </div>
             </div>
@@ -31,7 +36,7 @@
             </div>
             <div class="col-md-6">
                 <span class="post-comments"></span>
-                <img id="commentIcon" class="comment-icon img-fluid" src="../image/chat-bubble.png" alt="Comment Icon" style="max-width: 20px; max-height: 20px;">
+                <img id="commentIcon" class="comment-icon img-fluid"  src="../image/chat-bubble.png" alt="Comment Icon" style="max-width: 20px; max-height: 20px;">
             </div>
             <div class="col-md-6 text-right">
                 <span class="post-likes"></span>
@@ -40,3 +45,48 @@
         </div>
     </div>
 </template>
+<template id="commentExample">
+    <div class="comment mt-5 mb-3 border p-3 rounded mx-auto col-md-8">
+        <div class="comment-details row g-3">
+            <div class="col-md-12">
+                <p class="comment-author-date">
+                    <span class="comment-author"></span> - <span class="comment-date"></span>
+                </p>
+                <p class="comment-text"></p>
+            </div>
+        </div>
+    </div>
+</template>
+
+<template id="commentForm">
+    <div class="comment-form mt-3 border p-3 rounded">
+        <form id="addCommentForm">
+            <div class="mb-3">
+                <label for="commentText" class="form-label">Ваш комментарий:</label>
+                <textarea class="form-control" id="commentText" rows="3" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Добавить комментарий</button>
+        </form>
+    </div>
+</template>
+
+<div id="postEl" class="row g-3"></div>
+<div class="commentsadasd mt-3 mb-3 border p-3 rounded mx-auto col-md-8">
+    <div>
+        <h2 class="commentar-title">Коментарии</h2>
+    </div>
+    <hr class="my-2">
+    <div id="commentsContainer">
+        <div id="subCommentsContainer">
+        </div>
+    </div>
+</div>
+
+<script data-src="../ts/postPage.js" defer></script>
+<script data-src="../ts/post.js" defer></script>
+<script data-src="../ts/doLikePost.js" defer></script>
+<script data-src="../ts/getPostInformation.js" defer></script>
+<script data-src="../ts/likePost.js" defer></script>
+<script data-src="../ts/tags.js" defer></script>
+<script data-src="https://code.jquery.com/jquery-3.3.1.slim.min.js" defer></script>
+<script data-src="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/js/bootstrap-datepicker.min.js" defer></script>
