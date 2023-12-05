@@ -34,7 +34,7 @@ export async function getPost(postId: string): Promise<PostData> {
     const postDataURL = `https://blog.kreosoft.space/api/post/${postId}`;
     const token = localStorage.getItem('token');
 
-    if (token) {
+    if (postDataURL == `https://blog.kreosoft.space/api/post/${postId}`) {
         try {
             const response = await fetch(postDataURL, {
                 method: 'GET',

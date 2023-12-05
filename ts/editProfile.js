@@ -8,6 +8,12 @@ document.getElementById('editForm')?.addEventListener('submit', function (event)
         console.error('Error message element not found');
         return;
     }
+    if (!token) {
+        console.log('Пользователь не авторизован');
+        errorMessageElement.textContent = 'Пользователь не авторизован';
+        errorMessageElement.style.display = 'block';
+        return;
+    }
     const username = document.getElementById('username').value;
     const email = document.getElementById('email').value;
     const datetime = document.getElementById('datetime').value;
