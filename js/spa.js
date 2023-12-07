@@ -13,8 +13,8 @@ const routes = {
     "/authorization": "/pages/authorization.html",
     "/registration": "/pages/registration.html",
     "/profile": "/pages/profile.html",
+    "/post/create": "/pages/create.html",
     "/post/:id": "/pages/post.html",
-    "/post/create": "/pages/create.html"
 };
 
 const handleLocation = async (path = window.location.pathname) => {
@@ -51,7 +51,7 @@ const handleLocation = async (path = window.location.pathname) => {
         console.log("asdasdasdasd");
     }
 
-    if (path === "/") {
+    if (path === "/" || path === "/post/create") {
         addTagsToDiv();
     }
 

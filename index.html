@@ -21,6 +21,7 @@
       <div class="container-fluid">
         <a class="navbar-brand" href="/">AboutMe</a>
         <div class="dropdown">
+          <button class="btn btn-success me-2" id="writePostBtn">Написать пост</button>
           <a class="navbar-brand" id="userEmail" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <span class="dropdown-toggle"></span>
           </a>
@@ -33,7 +34,7 @@
           <span class="navbar-toggler-icon"></span>
         </button>
       </div>
-  </nav>
+    </nav>      
   </header>
   <main>
     <div id="containerId"></div>
@@ -47,5 +48,6 @@
 <script type ="module" src="./ts/logout.js" defer></script>
 <script type ="module" src="../ts/tags.js" defer></script>
 <script type ="module" src="../ts/tagsToDiv.js" defer></script>
+<script type="module" src="/ts/writePostButton.js"defer></script>
 </body>
 </html>

@@ -1,0 +1,43 @@
+<div class="container mt-5 justify-content-center">
+    <label id="writePostLabel" class="fs-4 fw-bold mb-3">Написать пост</label>
+    <form class="row g-3 col-10 mx-auto border p-3 rounded" id="writePostForm">
+        <div class="col-md-6 border p-3 rounded">
+            <label for="postTitle" class="form-label">Название поста</label>
+            <input type="text" class="form-control" id="postTitle" name="postTitle" placeholder="Введите название поста" required>
+        </div>
+        <div class="col-md-6 border p-3 rounded">
+            <label for="postDescription" class="form-label">Описание поста</label>
+            <textarea class="form-control" id="postDescription" name="postDescription" placeholder="Введите описание поста" rows="3" required></textarea>
+        </div>
+        <div class="col-md-6 border p-3 rounded">
+            <label for="imageLink" class="form-label">Ссылка на картинку</label>
+            <input type="text" class="form-control" id="imageLink" name="imageLink" placeholder="Введите ссылку на картинку">
+        </div>
+        <div class="col-md-6 border p-3 rounded">
+            <label for="tagsElements" class="form-label">Выбор тегов</label>
+            <select id="tagsElements" class="form-select" name="tagsElements" multiple required>
+            </select>
+        </div>
+        <div class="col-md-6 border p-3 rounded">
+            <label for="readingTime" class="form-label">Время чтения (в минутах)</label>
+            <input type="number" class="form-control" id="readingTime" name="readingTime" placeholder="Введите время чтения" required>
+        </div>
+        <div class="col-md-6 border p-3 rounded">
+            <label for="group" class="form-label">Группа</label>
+            <select id="group" class="form-select" name="group">
+            </select>
+        </div>
+        <div class="col-md-6 border p-3 rounded">
+            <label for="address" class="form-label">Адрес</label>
+            <input type="text" class="form-control" id="address" name="address" placeholder="Введите адрес">
+        </div>
+        <div class="col-12">
+            <button type="submit" class="btn btn-primary">Опубликовать пост</button>
+        </div>
+    </form>
+</div>
+
+
+<script data-src="https://code.jquery.com/jquery-3.3.1.slim.min.js" defer></script>
+<script data-src="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/js/bootstrap-datepicker.min.js" defer></script>
+<script data-src="../ts/writePost.js" defer></script>
