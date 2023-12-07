@@ -3,12 +3,11 @@ import { CommentData, getCommentTree } from "./getComment.js";
 
 export const displayComments = async (post: PostData) => {
     const commentContainer = document.getElementById('commentsContainer');
-    console.log("asdkjawidiuawuidhawiudhwa");
+
     if (!commentContainer) {
         console.error('Элемент "commentsContainer" не найден.');
         return;
     }
-    console.log("asdkjawidiuawuidhawiudhwa");
 
     commentContainer.innerHTML = '';
 
@@ -16,11 +15,16 @@ export const displayComments = async (post: PostData) => {
 
     const displayCommentAndSubComments = async (commentData: CommentData, container: HTMLElement) => {
         const newComment = (document.importNode(commentTemplate.content, true) as DocumentFragment).firstElementChild as HTMLElement;
-
+        const commentId = commentData.id;
+        const commentIdElement = newComment.querySelector('.comment-details') as HTMLElement;
         const commentAuthorElement = newComment.querySelector('.comment-author') as HTMLElement;
         const commentDateElement = newComment.querySelector('.comment-date') as HTMLElement;
         const commentContentElement = newComment.querySelector('.comment-text') as HTMLElement;
         const subCommentsContainerElement = newComment.querySelector('.sub-comments') as HTMLElement;
+
+        if (commentIdElement) {
+            commentIdElement.dataset.commentId = commentId;
+        }
 
         if (commentAuthorElement) {
             commentAuthorElement.textContent = commentData.author;
@@ -33,6 +37,7 @@ export const displayComments = async (post: PostData) => {
         if (commentContentElement) {
             if (commentData.deleteDate) {
                 commentContentElement.textContent = 'Комментарий удален';
+                commentDateElement.textContent = 'Комментарий удален';
             } else {
                 commentContentElement.textContent = commentData.content;
             }
@@ -40,7 +45,7 @@ export const displayComments = async (post: PostData) => {
 
         if (commentData.subComments > 0) {
             const subCommentsArray = await getCommentTree(commentData.id);
-            console.log(subCommentsArray);
+
             if (Array.isArray(subCommentsArray) && subCommentsArray.length > 0) {
                 for (const subComment of subCommentsArray) {
                     if (subComment.subComments > 0) {
@@ -51,7 +56,7 @@ export const displayComments = async (post: PostData) => {
             }
         }
 
-        if (!commentData.deleteDate) {
+        if (!commentData.deleteDate || commentData.subComments > 0) {
             container.appendChild(newComment);
         }
     };
@@ -60,3 +65,5 @@ export const displayComments = async (post: PostData) => {
         await displayCommentAndSubComments(comment, commentContainer);
     }
 };
+
+

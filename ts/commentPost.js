@@ -1,5 +1,5 @@
 "use strict";
-document.getElementById('commentForm')?.addEventListener('submit', async function (event) {
+document.getElementById('addCommentForm')?.addEventListener('submit', async function (event) {
     event.preventDefault();
     const token = localStorage.getItem('token');
     if (!token) {

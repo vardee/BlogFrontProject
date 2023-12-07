@@ -2,6 +2,7 @@ import { updateNavbar } from "../ts/navbar.js";
 const logoutURL = "https://blog.kreosoft.space/api/account/logout";
 
 document.getElementById('logout')?.addEventListener('click', function (event) {
+    
     event.preventDefault();
     
     const token = localStorage.getItem('token');

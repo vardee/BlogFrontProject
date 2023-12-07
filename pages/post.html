@@ -46,20 +46,44 @@
     </div>
 </template>
 <template id="commentExample">
-    <div class="comment mt-5 mb-3 border p-3 rounded mx-auto col-md-8">
-        <div class="comment-details row g-3">
+    <div class="comment-exm mt-5 mb-3 border p-3 rounded mx-auto col-md-8">
+        <div class="comment-details row g-3" data-comment-id="">
             <div class="col-md-12">
                 <p class="comment-author-date">
                     <span class="comment-author"></span> - <span class="comment-date"></span>
+                    <img src="../image/deletedIcon.png" alt="Delete Icon" class="delete-icon" style="max-width: 20px; max-height: 20px;">
+                    <img src="../image/pencil.png" alt="Edit Icon" class="edit-icon" style="max-width: 20px; max-height: 20px;">
                 </p>
                 <p class="comment-text"></p>
+                <p class="actions" id="actionsButtonsFor">
+                    <span class="reply-text" id="replySendText">Ответить</span>
+                </p>
+            </div>
+            <div>
+                <div class="col-md-12 comment-reply-form-container" style="display: none;">
+                    <div class="comment-reply-post mt-3 mb-3 border p-3 rounded mx-auto col-md-8">
+                        <input type="text" class="form-control comment-input comment-form" placeholder="Ваш комментарий" required>
+                        <button type="submit" class="btn btn-primary comment-submit">Добавить комментарий</button>
+                    </div>
+                </div>
+                <div class="col-md-12 comment-edit-form-container" style="display: none;">
+                    <div class="comment-edit-post mt-3 mb-3 border p-3 rounded mx-auto col-md-8">
+                        <input type="text" class="form-control comment-edit-input comment-edit-form" placeholder="Ваш комментарий" required>
+                        <button type="submit" class="btn btn-primary comment-submit">Редактировать</button>
+                    </div>
+                </div>
             </div>
             <div class="col-md-12 sub-comments">
-                <!-- Контейнер для сабкомментариев будет добавлен сюда -->
             </div>
         </div>
     </div>
 </template>
+
+
+
+
+
+
 
 <div id="postEl" class="row g-3"></div>
 
@@ -90,5 +114,11 @@
 <script data-src="../ts/likePost.js" defer></script>
 <script data-src="../ts/tags.js" defer></script>
 <script data-src="../ts/commentPost.js" defer></script>
+<script data-src="../ts/replyComment.js" defer></script>
+<script data-src="../ts/showReplyCommentForm.js" defer></script>
+<script data-src="../ts/displayComment.js" defer></script>
+<script data-src="../ts/showAuthorizideCommentElement.js" defer></script>
+<script data-src="../ts/editComment.js" defer></script>
+<script data-src="../ts/deleteComment.js" defer></script>
 <script data-src="https://code.jquery.com/jquery-3.3.1.slim.min.js" defer></script>
 <script data-src="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/js/bootstrap-datepicker.min.js" defer></script>

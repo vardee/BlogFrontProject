@@ -1,30 +1,29 @@
 import { displayComments } from "./displayComment.js";
 import { PostData, getPost } from "./getPostInformation.js";
+import { updateCommentUI } from "./showAuthorizideCommentElement.js";
 
 
 document.addEventListener('DOMContentLoaded', async () => {
-    console.log("asdkjawidiuawuidhawiudhwa")
     try {
         const path = window.location.pathname;
-        console.log(path)
         if (path.startsWith("/post/")) {
             const postId = path.split("/")[2];
-            console.log(postId);
             if (postId) {
                 const postData = await getPost(postId);
-                displayPost(postData);
-                displayComments(postData);
+                await displayPost(postData);
+                await displayComments(postData);
+                updateCommentUI(postId);
             } else {
                 console.error('ID поста не найден в URL.');
             }
-        }
-        else{
-            console.log("vsepiszdec")
+        } else {
+            console.log("vsepiszdec");
         }
     } catch (error) {
         console.error('Ошибка при загрузке поста:', (error as Error).message);
     }
 });
+
 
 const displayPost = (post: PostData) => {
     const postContainer = document.getElementById('postEl');
