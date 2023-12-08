@@ -13,7 +13,7 @@ export async function updateNavbar(): Promise<void> {
     }
     const userEmail = userEmailElement as HTMLSpanElement;
     const token = localStorage.getItem('token');
-    if (token) {
+        if (token) {
         authorizedNavbar.style.display = 'block';
         unauthorizedNavbar.style.display = 'none';
 

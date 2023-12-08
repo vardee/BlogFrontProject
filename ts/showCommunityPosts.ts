@@ -1,20 +1,3 @@
-import { getTags } from "./tags.js";
-
-document.addEventListener('DOMContentLoaded', async () => {
-    console.log('DOMContentLoaded event triggered');
-    await loadPosts();
-});
-
-window.addEventListener('popstate', async () => {
-    console.log('popstate event triggered');
-    try {
-        await loadPosts();
-        console.log('loadPosts executed successfully');
-    } catch (error) {
-        console.error('Error in loadPosts:', error);
-    }
-});
-
 document.getElementById('filterForm')?.addEventListener('submit', async function (event) {
     event.preventDefault();
     console.log('Filter form submitted');
@@ -30,18 +13,29 @@ document.getElementById('pagination')?.addEventListener('click', async function 
         const urlParams = new URLSearchParams(window.location.search);
         urlParams.set('page', page);
         window.history.pushState({}, '', `?${urlParams.toString()}`);
-        await loadPosts();
+        const path = window.location.pathname;
+        if (path.startsWith("/communities/")) {
+            const communityId = path.split("/")[2];
+            if (communityId) {
+                await loadPosts(communityId);
+            } else {
+                console.error('ID сообщества не найден в URL.');
+            }
+        } else {
+            console.log("Неверный путь");
+        }
     }
 });
 
-const loadPosts = async () => {
+export const loadPosts = async (communityId: string) => {
     console.log('loadPosts function called');
     const urlParams = new URLSearchParams(window.location.search);
-    const apiUrl = 'https://blog.kreosoft.space/api/post';
+    const apiUrl = `https://blog.kreosoft.space/api/community/${communityId}/post`;
     const url = new URL(apiUrl);
     const token = localStorage.getItem('token');
 
     url.search = urlParams.toString();
+    console.log(url.toString())
 
     try {
         const response = await fetch(url.toString(), {
@@ -74,7 +68,7 @@ const loadPosts = async () => {
 
         const postTemplate = document.getElementById('postTemplate') as HTMLTemplateElement;
 
-        posts.forEach((post: { hasLike: boolean; id: string; title: string; description: string; author: string; communityName:string, createTime: string; image: string; tags: any[]; readingTime: any; commentsCount: any; likes: string; }) => {
+        posts.forEach((post: { hasLike: boolean; id: string; title: string; description: string; author: string; createTime: string; image: string; tags: any[]; readingTime: any; commentsCount: any; likes: string; }) => {
             const newPost = document.importNode(postTemplate.content, true);
             const postId = post.id;
             const postElement = newPost.querySelector('.post') as HTMLElement;
@@ -87,7 +81,6 @@ const loadPosts = async () => {
             const readingTimeElement = newPost.querySelector('.post-reading-time') as HTMLElement;
             const commentsElement = newPost.querySelector('.post-comments') as HTMLElement;
             const likesElement = newPost.querySelector('.post-likes') as HTMLElement;
-            const communityNameElement = newPost.querySelector('.post-community') as HTMLElement;
             
             if (titleElement) {
                 titleElement.textContent = post.title ?? '';
@@ -95,9 +88,6 @@ const loadPosts = async () => {
                 if (postLink) {
                     postLink.href = `/post/${post.id}`;
                 }
-            }
-            if(communityNameElement){
-                communityNameElement.textContent = post.communityName ?? 'Без группы';
             }
             if (descriptionElement) descriptionElement.innerHTML = post.description ?? '';
             if (authorElement) authorElement.textContent = post.author ?? '';
@@ -142,7 +132,7 @@ const loadPosts = async () => {
     }
 };
 
-const applyFilters = async () => {
+export const applyFilters = async () => {
     console.log('applyFilters function called');
     const tags = Array.from((document.getElementById('tagsElements') as HTMLSelectElement).selectedOptions).map(option => option.value);
     const author = (document.getElementById('author') as HTMLInputElement).value;
@@ -166,12 +156,22 @@ const applyFilters = async () => {
     params.set('size', size);
 
     window.history.pushState({}, '', `?${params.toString()}`);
-    await loadPosts();
+    const path = window.location.pathname;
+    if (path.startsWith("/communities/")) {
+        const communityId = path.split("/")[2];
+        if (communityId) {
+            await loadPosts(communityId);
+        } else {
+            console.error('ID сообщества не найден в URL.');
+        }
+    } else {
+        console.log("Неверный путь");
+    }
 };
 
 
 
-const updatePagination = (pageCount: number, currentPage: number) => {
+export const updatePagination = async (pageCount: number, currentPage: number)  => {
     const paginationContainer = document.getElementById('pagination');
 
     if (!paginationContainer) {
@@ -212,7 +212,17 @@ const updatePagination = (pageCount: number, currentPage: number) => {
                 const urlParams = new URLSearchParams(window.location.search);
                 urlParams.set('page', page);
                 window.history.pushState({}, '', `?${urlParams.toString()}`);
-                await loadPosts();
+                const path = window.location.pathname;
+                if (path.startsWith("/communities/")) {
+                    const communityId = path.split("/")[2];
+                    if (communityId) {
+                        await loadPosts(communityId);
+                    } else {
+                        console.error('ID сообщества не найден в URL.');
+                    }
+                } else {
+                    console.log("Неверный путь");
+                }
             }
         });
 
@@ -221,7 +231,3 @@ const updatePagination = (pageCount: number, currentPage: number) => {
     }
 };
 
-
-
-console.log('Calling loadPosts from the beginning');
-await loadPosts();

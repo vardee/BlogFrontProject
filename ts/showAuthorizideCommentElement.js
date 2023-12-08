@@ -2,7 +2,7 @@ import { getPost } from "./getPostInformation.js";
 import { getProfile } from "./getProfile.js";
 import { getCommentTree } from "./getComment.js";
 export async function updateCommentUI(postId) {
-    let currentIndex = 0; // Локальная переменная для хранения индекса внутри функции
+    let currentIndex = 0;
     async function processCommentsRecursive(comment, profileId, deleteButtons, editButtons) {
         if (!comment || !comment.authorId) {
             console.error('Комментарий не содержит информацию об авторе.');
@@ -26,7 +26,7 @@ export async function updateCommentUI(postId) {
                         if (subComment.subComments > 0) {
                             subComment.subComments = 0;
                         }
-                        currentIndex++; // Увеличиваем значение currentIndex
+                        currentIndex++;
                         await processCommentsRecursive(subComment, profileId, deleteButtons, editButtons);
                     }
                 }

@@ -3,6 +3,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="../css/style.css">
 </head>
+<template id ="communityInfoTemplate">
+<div class="community mt-5 mb-3 border p-3 rounded mx-auto col-md-8" data-community-id="">
+    <div class="community-details row g-3">
+        <div class="col-md-6">
+            <h2 class="community-name"></h2>
+            <p class="community-subscribers"></p>
+            <p class="community-type"></p>
+            <hr>
+            <p class="community-admins"></p>
+        </div>
+        <div class="col-md-6 text-right subscribe-btn-container">
+            <button class="btn btn-success write-post">Написать пост</button>
+            <button class="btn btn-primary subscribe-community">Подписаться</button>
+            <button class="btn btn-danger unsubscribe-community">Отписаться</button>
+        </div>
+    </div>
+</div>
+</template>
+<div id="communityContainerInfo" class="row g-3"></div>
 <div class="container mt-3 justify-content-center">
     <label id="filterLabel" class="fs-4 fw-bold mb-3 ">Фильтры</label>
     <form class="row g-3 col-12 mx-auto border p-2 rounded" id="filterForm">
@@ -11,20 +30,6 @@
             <select id="tagsElements" class="form-select" name="tags" multiple>
             </select>
         </div>
-      <div class="col-md-6 border p-3 rounded">
-          <label for="author" class="form-label ">Авторы</label>
-          <input type="text" class="form-control" id="author" name="author" placeholder="Введите имя автора">
-      </div>
-      <div class="col-md-6 border p-3 rounded">
-          <label for="min" class="form-label">Мининимальное время чтения</label>
-          <input type="number" class="form-control" id="minReadingTime" name="minReadingTime"
-              placeholder="Введите минимальное время чтения">
-      </div>
-      <div class="col-md-6 border p-3 rounded">
-          <label for="max" class="form-label">Максимальное время чтения</label>
-          <input type="number" class="form-control" id="maxReadingTime" name="maxReadingTime"
-              placeholder="Введите максимальное время чтения">
-      </div>
       <div class="col-md-4 border p-3 rounded">
         <label for="sorting" class="form-label">Сортировка</label>
         <select id="sorting" class="form-select" name="sorting">
@@ -34,13 +39,6 @@
             <option value="LikeDesc">По лайкам по убыванию</option>
         </select>
     </div>
-    
-      <div class="col-md-4 border p-3 rounded">
-          <label class="form-check-label">Только мои группы</label>
-          <div class="form-check">
-              <input class="form-check-input" type="checkbox" id="onlyMyCommunities" name="onlyMyCommunities">
-          </div>
-      </div>
       <div class="col-md-2 border p-3 rounded">
           <label for="size" class="form-label">Количество постов</label>
           <input type="number" class="form-control" id="size" name="size" placeholder="Количество">
@@ -51,13 +49,14 @@
   </form>
 </div>
 
+
 <template id="postTemplate">
     <div class="container-fluid">
     <div class="post mt-5 mb-3 border p-3 rounded mx-auto col-md-8" data-post-id="">
         <div class="post-details row g-3">
             <div class="col-md-12">
                 <p class="post-author-date">
-                    <span class="post-author"></span> - <span class="post-date"></span> - <span class="post-community"></span>
+                    <span class="post-author"></span> - <span class="post-date"></span>
                 </p>
                 <a class="post-link"><h2 class="post-title text-wrap"></h2></a>
             </div>
@@ -98,36 +97,23 @@
 
 <div id="posts" class="row g-3">
 </div>
-
-<nav aria-label="Page navigation example" class="d-flex justify-content-center mt-3">
-    <ul class="pagination" id="pagination">
-        <li class="page-item">
-            <a class="page-link" href="#" aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
-            </a>
-        </li>
-        <li class="page-item">
-            <a class="page-link" href="#" aria-label="Next" data-page="2">
-                <span aria-hidden="true">&raquo;</span>
-            </a>
-        </li>
-    </ul>
-</nav>
 <nav aria-label="Page navigation example" class="d-flex justify-content-center mt-3">
     <ul class="pagination" id="pagination">
     </ul>
 </nav>
 
-<footer></footer>
-<script type ="module" src="../ts/post.js" defer></script>
-<script type ="module" src="../ts/doLikePost.js" defer></script>
-<script type ="module" src="../ts/getPostInformation.js" defer></script>
-<script type ="module" src="../ts/likePost.js" defer></script>
+<script data-src="https://code.jquery.com/jquery-3.3.1.slim.min.js" defer></script>
+<script data-src="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/js/bootstrap-datepicker.min.js" defer></script>
+<script type ="module" src="../ts/showCommunityList.js" defer></script>
+<script type ="module" src="../ts/getCommunity.js" defer></script>
+<script type ="module" src="../ts/getFullInfoCommunity.js" defer></script>
+<script type ="module" src="../ts/communityInformationPage.js" defer></script>
 <script type ="module" src="../ts/tags.js" defer></script>
 <script type ="module" src="../ts/tagsToDiv.js" defer></script>
-<script type ="module" src="../ts/postPage.js" defer></script>
-<script type ="module" src="../ts/showFullPost.js" defer></script>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script type ="module" src="../ts/showCommunityPosts.js" defer></script>
+<script type ="module" src="../ts/doLikePost.js" defer></script>
+<script type ="module" src="../ts/likePost.js" defer></script>
+<script type ="module" src="../ts/subscribeCommunity.js" defer></script>
+<script type ="module" src="../ts/unsubscribeCommunity.js" defer></script>
+<script type ="module" src="../ts/buttonsCommunityPage.js" defer></script>
+<script type ="module" src="../ts/logout.js" defer></script>

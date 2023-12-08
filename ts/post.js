@@ -72,12 +72,16 @@ const loadPosts = async () => {
             const readingTimeElement = newPost.querySelector('.post-reading-time');
             const commentsElement = newPost.querySelector('.post-comments');
             const likesElement = newPost.querySelector('.post-likes');
+            const communityNameElement = newPost.querySelector('.post-community');
             if (titleElement) {
                 titleElement.textContent = post.title ?? '';
                 const postLink = titleElement.closest('.post-link');
                 if (postLink) {
                     postLink.href = `/post/${post.id}`;
                 }
+            }
+            if (communityNameElement) {
+                communityNameElement.textContent = post.communityName ?? 'Без группы';
             }
             if (descriptionElement)
                 descriptionElement.innerHTML = post.description ?? '';
@@ -101,8 +105,8 @@ const loadPosts = async () => {
                 }
             }
             if (tagsElement) {
-                const tagNames = post.tags?.map(tag => tag.name).join(' ') ?? '';
-                tagsElement.textContent = `#${tagNames}`;
+                const tagNames = post.tags?.map(tag => `#${tag.name}`).join(' ') ?? '';
+                tagsElement.textContent = tagNames;
             }
             if (readingTimeElement)
                 readingTimeElement.textContent = `Время чтения: ${post.readingTime ?? ''} минут`;

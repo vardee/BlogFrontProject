@@ -1,20 +1,23 @@
 import { updateNavbar } from "../ts/navbar.js";
 import { addTagsToDiv } from '../ts/tagsToDiv.js';
-
+import{showCommunityFullInformation} from "../ts/communityInformationPage.js"
+import {displayCommunity} from "../ts/showCommunityList.js"
+import { loadPosts } from "../ts/showCommunityPosts.js";
 const customRoute = (event, path) => {
     event.preventDefault();
     window.history.pushState({}, "", path);
     handleLocation(path);
-    window.location.reload();
 };
 
 const routes = {
     "/": "/pages/main.html",
-    "/authorization": "/pages/authorization.html",
+    "/login/": "/pages/authorization.html",
     "/registration": "/pages/registration.html",
     "/profile": "/pages/profile.html",
     "/post/create": "/pages/create.html",
     "/post/:id": "/pages/post.html",
+    "/communities": "/pages/community.html",
+    "/communities/:id": "/pages/communityPage.html"
 };
 
 const handleLocation = async (path = window.location.pathname) => {
@@ -66,9 +69,9 @@ const handleLocation = async (path = window.location.pathname) => {
             const html = await response.text();
             document.getElementById("containerId").innerHTML = html;
 
-            const scriptTags = document.querySelectorAll('script[data-src]');
+            const scriptTags = document.querySelectorAll('script[type="module"]');
             scriptTags.forEach(scriptTag => {
-                const src = scriptTag.dataset.src;
+                const src = scriptTag.src;
                 if (src) {
                     import(src)
                         .then(module => {
@@ -80,7 +83,13 @@ const handleLocation = async (path = window.location.pathname) => {
             });
 
             updateNavbar();
-
+            if(path === "/communities"){
+                await displayCommunity();
+            }
+            if(path.startsWith("/communities/")){
+                await addTagsToDiv();
+                await showCommunityFullInformation();
+            }
         } catch (error) {
             console.error('Ошибка при загрузке файла:', error.message);
         }
@@ -107,8 +116,9 @@ const savedEventListeners = {
     popstate: [window, () => handleLocation()]
 };
 
-window.onload = () => {
+document.addEventListener('DOMContentLoaded', () => {
     for (const [element, listener] of Object.values(savedEventListeners)) {
         element.addEventListener(listener[0], listener[1]);
     }
-};
+});
+

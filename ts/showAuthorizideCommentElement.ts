@@ -3,7 +3,7 @@ import { getProfile, ProfileData } from "./getProfile.js";
 import { CommentData, getCommentTree } from "./getComment.js";
 
 export async function updateCommentUI(postId: string) {
-    let currentIndex = 0; // Локальная переменная для хранения индекса внутри функции
+    let currentIndex = 0;
 
     async function processCommentsRecursive(comment: CommentData, profileId: string, deleteButtons: NodeListOf<HTMLElement>, editButtons: NodeListOf<HTMLElement>) {
         if (!comment || !comment.authorId) {
@@ -30,7 +30,7 @@ export async function updateCommentUI(postId: string) {
                         if (subComment.subComments > 0) {
                             subComment.subComments = 0;
                         }
-                        currentIndex++; // Увеличиваем значение currentIndex
+                        currentIndex++;
                         await processCommentsRecursive(subComment, profileId, deleteButtons, editButtons);
                     }
                 }

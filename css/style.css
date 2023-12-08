@@ -25,5 +25,8 @@
 }
 
 .sub-comment {
-    margin-left: 20px; /* Отступ для сабкомментариев */
+    margin-left: 20px;
+}
+.text-wrap {
+    word-wrap: break-word;
 }

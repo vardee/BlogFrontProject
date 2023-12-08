@@ -70,8 +70,8 @@ const displayPost = (post) => {
         }
     }
     if (tagsElement) {
-        const tagNames = post.tags?.map(tag => tag.name).join(' ') ?? '';
-        tagsElement.textContent = `#${tagNames}`;
+        const tagNames = post.tags?.map(tag => `#${tag.name}`).join(' ') ?? '';
+        tagsElement.textContent = tagNames;
     }
     if (readingTimeElement)
         readingTimeElement.textContent = `Время чтения: ${post.readingTime ?? ''} минут`;

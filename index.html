@@ -11,7 +11,7 @@
     <nav class="navbar navbar-expand-lg bg-body-tertiary" id="unauthorizedNavbar">
       <div class="container-fluid">
         <a class="navbar-brand" href="/">AboutMe</a>
-        <a class="navbar-brand" href="/authorization">Войти</a>
+        <a class="navbar-brand" href="/login/">Войти</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -19,22 +19,37 @@
     </nav>
     <nav class="navbar navbar-expand-lg bg-body-tertiary" id="authorizedNavbar" style="display: none;">
       <div class="container-fluid">
-        <a class="navbar-brand" href="/">AboutMe</a>
-        <div class="dropdown">
-          <button class="btn btn-success me-2" id="writePostBtn">Написать пост</button>
-          <a class="navbar-brand" id="userEmail" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <span class="dropdown-toggle"></span>
-          </a>
-          <div class="dropdown-menu" aria-labelledby="userEmail">
-            <a class="dropdown-item" href="/profile">Профиль</a>
-            <a class="dropdown-item" id="logout">Выход</a>
+          <a class="navbar-brand" href="/">AboutMe</a>
+          <ul class="navbar-nav">
+              <li class="nav-item">
+                  <a class="nav-link" href="/communities">Группы</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="/authors/">Авторы</a>
+              </li>
+          </ul>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAuthorized" aria-controls="navbarNavAuthorized" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavAuthorized">
+              <ul class="navbar-nav ms-auto">
+                  <li class="nav-item">
+                      <button class="btn btn-success me-2" id="writePostBtn">Написать пост</button>
+                  </li>
+                  <li class="nav-item dropdown">
+                      <a class="navbar-brand" id="userEmail" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <span class="dropdown-toggle"></span>
+                      </a>
+                      <div class="dropdown-menu" aria-labelledby="userEmail">
+                          <a class="dropdown-item" href="/profile">Профиль</a>
+                          <a class="dropdown-item" id="logout">Выход</a>
+                      </div>
+                  </li>
+              </ul>
           </div>
-        </div>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
       </div>
-    </nav>      
+  </nav>
+    
   </header>
   <main>
     <div id="containerId"></div>

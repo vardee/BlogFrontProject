@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 await displayPost(postData);
                 await displayComments(postData);
                 updateCommentUI(postId);
+                
             } else {
                 console.error('ID поста не найден в URL.');
             }
@@ -75,8 +76,8 @@ const displayPost = (post: PostData) => {
     }
 
     if (tagsElement) {
-        const tagNames = post.tags?.map(tag => tag.name).join(' ') ?? '';
-        tagsElement.textContent = `#${tagNames}`;
+        const tagNames = post.tags?.map(tag => `#${tag.name}`).join(' ') ?? '';
+        tagsElement.textContent = tagNames;
     }
 
     if (readingTimeElement) readingTimeElement.textContent = `Время чтения: ${post.readingTime ?? ''} минут`;
