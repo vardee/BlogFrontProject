@@ -1,0 +1,36 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="../css/style.css">
+</head>
+<template id="authorTemplate">
+    <div class="author mt-5 mb-3 border p-3 rounded mx-auto col-md-8 d-flex align-items-center">
+        <div class="avatar-container me-3 position-relative">
+            <img class="crowned-avatar gold" src="../image/crownGold.png" alt="Crown" style="max-width: 30px; max-height: 30px; margin-left: 10px; transform: rotate(-15deg); display: none;">
+            <img class="crowned-avatar silver" src="../image/crownSilver.png" alt="Crown" style="max-width: 30px; max-height: 30px; margin-left: 10px; transform: rotate(-15deg); display: none;">
+            <img class="crowned-avatar bronze" src="../image/crownBronze.png" alt="Crown" style="max-width: 30px; max-height: 30px; margin-left: 10px; transform: rotate(-15deg); display: none;">
+            <img class="avatar-img" alt="" style="max-width: 75px; max-height: 75px;" data-author-name="{author.fullName}">
+            <p class="author-nickname text-light p-1 rounded position-absolute start-100 top-50 translate-middle-y" style="margin-left: 5px;"></p>
+        </div>
+        <div class="author-details flex-grow-1">
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="author-info flex-grow-1" data-author-id="">
+                    <a class="author-link"><p class="author-name"></p></a>
+                    <p class="text-dark p-1 rounded" style="margin-top: -5px; margin-left: -5px;">Дата регистрации: <span class="created-date"></span></p>
+                    <p class="account-birthdate">Дата рождения: <span class="birthdate"></span></p>
+                </div>
+                <div class="subscribe-btn-container d-flex flex-column align-items-end">
+                    <div class="post-info me-3">
+                        <p>Посты: <span class="post-count"></span></p>
+                    </div>
+                    <div class="like-info me-3">
+                        <p>Лайки: <span class="like-count"></span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+<div id="authorContainer" class="row g-3" href></div>
+<script type ="module" src="../js/authors/getAuthors.js" defer></script>
+<script type ="module" src="../js/authors/showAuthorsList.js" defer></script>

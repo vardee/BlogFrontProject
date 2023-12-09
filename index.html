@@ -4,65 +4,66 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title></title>
+  <link rel="stylesheet" type="text/css" href="../css/style.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
 <body>
   <header>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary" id="unauthorizedNavbar">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="/">AboutMe</a>
-        <a class="navbar-brand" href="/login/">Войти</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-      </div>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary m-0" id="unauthorizedNavbar">
+        <div class="container-fluid h-100 d-flex align-items-center">
+            <a class="navbar-brand" href="/">AboutMe</a>
+            <a class="navbar-brand" href="/login/">Войти</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
     </nav>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary" id="authorizedNavbar" style="display: none;">
-      <div class="container-fluid">
-          <a class="navbar-brand" href="/">AboutMe</a>
-          <ul class="navbar-nav">
-              <li class="nav-item">
-                  <a class="nav-link" href="/communities">Группы</a>
-              </li>
-              <li class="nav-item">
-                  <a class="nav-link" href="/authors/">Авторы</a>
-              </li>
-          </ul>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAuthorized" aria-controls="navbarNavAuthorized" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarNavAuthorized">
-              <ul class="navbar-nav ms-auto">
-                  <li class="nav-item">
-                      <button class="btn btn-success me-2" id="writePostBtn">Написать пост</button>
-                  </li>
-                  <li class="nav-item dropdown">
-                      <a class="navbar-brand" id="userEmail" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          <span class="dropdown-toggle"></span>
-                      </a>
-                      <div class="dropdown-menu" aria-labelledby="userEmail">
-                          <a class="dropdown-item" href="/profile">Профиль</a>
-                          <a class="dropdown-item" id="logout">Выход</a>
-                      </div>
-                  </li>
-              </ul>
-          </div>
-      </div>
-  </nav>
-    
-  </header>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary m-0" id="authorizedNavbar" style="display: none;">
+        <div class="container-fluid h-100 d-flex align-items-center">
+            <a class="navbar-brand" href="/">AboutMe</a>
+            <ul class="navbar-nav flex-grow-1">
+                <li class="nav-item">
+                    <a class="nav-link" href="/communities">Группы</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/authors/">Авторы</a>
+                </li>
+            </ul>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAuthorized" aria-controls="navbarNavAuthorized" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse flex-grow-1 justify-content-end" id="navbarNavAuthorized">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <button class="btn btn-success me-2" id="writePostBtn">Написать пост</button>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="navbar-brand" id="userEmail" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="dropdown-toggle"></span>
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="userEmail">
+                            <a class="dropdown-item" href="/profile">Профиль</a>
+                            <a class="dropdown-item" id="logout">Выход</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
   <main>
     <div id="containerId"></div>
   </main>
   <footer></footer>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-<script type="module" src="/ts/postPage.js" defer></script>
-<script type ="module" src="../js/spa.js" defer></script>
-<script type ="module" src="./ts/navbar.js" defer></script>
-<script type ="module" src="./ts/logout.js" defer></script>
-<script type ="module" src="../ts/tags.js" defer></script>
-<script type ="module" src="../ts/tagsToDiv.js" defer></script>
-<script type="module" src="/ts/writePostButton.js"defer></script>
+<script type="module" src="/js/posts/postPage.js" defer></script>
+<script type ="module" src="/js/spa/spa.js" defer></script>
+<script type ="module" src="/js/spa/spa.js" defer></script>
+<script type ="module" src="/js/spa/navbar.js" defer></script>
+<script type ="module" src="/js/account/logout.js" defer></script>
+<script type ="module" src="/js/tags/tags.js" defer></script>
+<script type ="module" src="/js/tags/tagsToDiv.js" defer></script>
+<script type="module" src="/js//posts/writePostButton.js"defer></script>
 </body>
 </html>
