@@ -44,6 +44,7 @@ document.body.addEventListener('click', async (event: Event) => {
             const requestData = {
                 content: commentEditText
             };
+            console.log(JSON.stringify(requestData))
                     try {
                         const response = await fetch(commentEditURL, {
                             method: 'PUT',
@@ -62,6 +63,7 @@ document.body.addEventListener('click', async (event: Event) => {
                         console.log('Коммент отправлен:', data);
                     } catch (error: any) {
                         console.error('Ошибка отправки коммента:', error.message);
+                        window.location.reload();
 
                         if (error.response) {
                             console.error('HTTP Status:', error.response.status);

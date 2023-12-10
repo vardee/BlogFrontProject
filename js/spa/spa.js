@@ -4,8 +4,8 @@ import { showCommunityFullInformation } from "../community/communityInformationP
 import { displayCommunity } from "../community/showCommunityList.js";
 import {addCommunitiesToDiv} from "../community/communititesToDiv.js"
 import { displayAuthors } from "../authors/showAuthorsList.js";
-import {truncateText} from "../posts/showFullPost.js"
-
+import {inputEditProfile} from "../account/updateUserProfileInfo.js"
+ 
 export function loadScripts(scriptCode) {
     const container = document.createElement('div');
     container.innerHTML = scriptCode;
@@ -32,7 +32,7 @@ export function loadScripts(scriptCode) {
 }
 
 
-const customRoute = (event, path) => {
+export const customRoute = (event, path) => {
     event.preventDefault();
     window.history.pushState({}, "", path);
     handleLocation(path);
@@ -125,6 +125,9 @@ const handleLocation = async (path = window.location.pathname) => {
             if (path === "/authors/") {
                 await displayAuthors();
             }
+            if(path === "/profile"){
+                await inputEditProfile();
+             }
         } catch (error) {
             console.error('Ошибка при загрузке файла:', error.message);
         }

@@ -1,3 +1,6 @@
+import { getPost } from "../posts/getPostInformation.js";
+import { displayComments } from "./displayComment.js";
+
 document.body.addEventListener('click', async (event: Event) => {
     const target = event.target as HTMLElement;
 
@@ -65,8 +68,11 @@ document.body.addEventListener('click', async (event: Event) => {
 
                         const data = await response.json();
                         console.log('Коммент отправлен:', data);
+                        const postData = await getPost(postId);
+                        displayComments(postData);
                     } catch (error: any) {
                         console.error('Ошибка отправки коммента:', error.message);
+                        window.location.reload();
 
                         if (error.response) {
                             console.error('HTTP Status:', error.response.status);

@@ -31,6 +31,7 @@ export const displayAuthors = async () => {
 
         authorData.forEach(async (author: AuthorsData) => {
             const authorInstance = document.importNode(authorTemplate.content, true);
+            const authorInfo = authorInstance.querySelector('.author') as HTMLElement;
             const authorName = authorInstance.querySelector('.author-name') as HTMLElement;
             const createdDate = authorInstance.querySelector('.created-date') as HTMLElement;
             const birthDate = authorInstance.querySelector('.birthdate') as HTMLElement;
@@ -41,10 +42,10 @@ export const displayAuthors = async () => {
             const goldCrown = authorInstance.querySelector('.crowned-avatar.gold') as HTMLImageElement;
             const silverCrown = authorInstance.querySelector('.crowned-avatar.silver') as HTMLImageElement;
             const bronzeCrown = authorInstance.querySelector('.crowned-avatar.bronze') as HTMLImageElement;
-
-            if (authorName) {
-                authorName.textContent = author.fullName;
+            if(authorInfo){
+                authorInfo.dataset.authorName = author.fullName;
             }
+
             if (createdDate) {
                 createdDate.textContent = await formatDateTimeAuthors(author.created);
             }

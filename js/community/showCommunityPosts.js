@@ -35,7 +35,21 @@ export const loadPosts = async (communityId) => {
     const url = new URL(apiUrl);
     const token = localStorage.getItem('token');
     url.search = urlParams.toString();
-    console.log(url.toString());
+    const tagsSelect = document.getElementById('tagsElements');
+    const sorting = document.getElementById('sorting');
+    const size = document.getElementById('size');
+    if (tagsSelect) {
+        const tags = urlParams.getAll('tags');
+        Array.from(tagsSelect.options).forEach(option => {
+            option.selected = tags.includes(option.value);
+        });
+    }
+    if (sorting) {
+        sorting.value = urlParams.get('sorting') || '';
+    }
+    if (size) {
+        size.value = urlParams.get('size') || '5';
+    }
     try {
         const response = await fetch(url.toString(), {
             method: 'GET',
@@ -73,12 +87,16 @@ export const loadPosts = async (communityId) => {
             const readingTimeElement = newPost.querySelector('.post-reading-time');
             const commentsElement = newPost.querySelector('.post-comments');
             const likesElement = newPost.querySelector('.post-likes');
+            const communityNameElement = newPost.querySelector('.post-community');
             if (titleElement) {
                 titleElement.textContent = post.title ?? '';
                 const postLink = titleElement.closest('.post-link');
                 if (postLink) {
                     postLink.href = `/post/${post.id}`;
                 }
+            }
+            if (communityNameElement) {
+                communityNameElement.textContent = post.communityName ?? 'Без группы';
             }
             if (descriptionElement) {
                 descriptionElement.innerHTML = post.description ?? '';
@@ -87,8 +105,9 @@ export const loadPosts = async (communityId) => {
             if (authorElement)
                 authorElement.textContent = post.author ?? '';
             if (dateElement) {
-                const formattedDate = await formatDateTime(post.createTime);
-                dateElement.textContent = formattedDate;
+                const formattedDate = post.createTime ?? ' ';
+                const normalDate = await formatDateTime(post.createTime);
+                dateElement.textContent = normalDate;
             }
             if (postElement) {
                 postElement.dataset.postId = postId;
@@ -125,29 +144,26 @@ export const loadPosts = async (communityId) => {
     }
 };
 export const applyFilters = async () => {
-    console.log('applyFilters function called');
-    const tags = Array.from(document.getElementById('tagsElements').selectedOptions).map(option => option.value);
-    const author = document.getElementById('author').value;
-    const minReadingTime = document.getElementById('minReadingTime').value;
-    const maxReadingTime = document.getElementById('maxReadingTime').value;
+    console.log('Функция applyFilters вызвана');
+    const tagsSelect = document.getElementById('tagsElements');
+    const selectedTags = Array.from(tagsSelect.selectedOptions).map(option => option.value);
     const sorting = document.getElementById('sorting').value;
-    const onlyMyCommunities = document.getElementById('onlyMyCommunities').checked;
     let size = document.getElementById('size').value;
     if (size.trim() === '') {
         size = '5';
     }
     const params = new URLSearchParams();
-    tags.forEach(tag => params.append('tags', tag));
-    if (author.trim() !== '')
-        params.set('author', author);
-    if (minReadingTime.trim() !== '')
-        params.set('minReadingTime', minReadingTime);
-    if (maxReadingTime.trim() !== '')
-        params.set('maxReadingTime', maxReadingTime);
+    const urlParams = new URLSearchParams(window.location.search);
+    for (const key of urlParams.keys()) {
+        if (key !== 'tags') {
+            params.append(key, urlParams.get(key) || '');
+        }
+    }
+    selectedTags.forEach(tag => {
+        params.append('tags', tag);
+    });
     if (sorting.trim() !== '')
         params.set('sorting', sorting);
-    if (onlyMyCommunities)
-        params.set('onlyMyCommunities', String(onlyMyCommunities));
     params.set('size', size);
     window.history.pushState({}, '', `?${params.toString()}`);
     const path = window.location.pathname;

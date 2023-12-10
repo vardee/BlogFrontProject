@@ -1,3 +1,4 @@
+import { formatDateTime } from "../additionService/changeDateType.js";
 import { showAllSubComments } from "../additionService/showSubComments.js";
 import { getCommentTree } from "./getComment.js";
 export const displayComments = async (post) => {
@@ -24,7 +25,7 @@ export const displayComments = async (post) => {
             commentAuthorElement.textContent = commentData.author;
         }
         if (commentDateElement) {
-            commentDateElement.textContent = commentData.createTime;
+            commentDateElement.textContent = await formatDateTime(commentData.createTime);
         }
         if (commentContentElement) {
             if (commentData.deleteDate) {

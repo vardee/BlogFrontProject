@@ -37,6 +37,7 @@ document.getElementById('addCommentForm')?.addEventListener('submit', async func
             })
                 .catch(error => {
                 console.error('Ошибка отправки коммента:', error.message);
+                window.location.reload();
                 if (error.response) {
                     console.error('HTTP Status:', error.response.status);
                     error.response.text().then((text) => {

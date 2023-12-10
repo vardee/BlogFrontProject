@@ -1,4 +1,5 @@
-"use strict";
+import { getPost } from "../posts/getPostInformation.js";
+import { displayComments } from "./displayComment.js";
 document.body.addEventListener('click', async (event) => {
     const target = event.target;
     if (target.classList.contains('reply-text')) {
@@ -54,9 +55,12 @@ document.body.addEventListener('click', async (event) => {
                         }
                         const data = await response.json();
                         console.log('Коммент отправлен:', data);
+                        const postData = await getPost(postId);
+                        displayComments(postData);
                     }
                     catch (error) {
                         console.error('Ошибка отправки коммента:', error.message);
+                        window.location.reload();
                         if (error.response) {
                             console.error('HTTP Status:', error.response.status);
                             const text = await error.response.text();

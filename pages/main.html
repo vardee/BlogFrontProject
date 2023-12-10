@@ -13,7 +13,7 @@
         </div>
       <div class="col-md-6 border p-3 rounded">
           <label for="author" class="form-label ">Авторы</label>
-          <input type="text" class="form-control" id="author" name="author" placeholder="Введите имя автора">
+          <input type="text" class="form-control author" id="author" name="author" placeholder="Введите имя автора">
       </div>
       <div class="col-md-6 border p-3 rounded">
           <label for="min" class="form-label">Мининимальное время чтения</label>
@@ -28,6 +28,7 @@
       <div class="col-md-4 border p-3 rounded">
         <label for="sorting" class="form-label">Сортировка</label>
         <select id="sorting" class="form-select" name="sorting">
+            <option value="">Выбрать сортировку</option>
             <option value="CreateDesc">Время создания по убыванию</option>
             <option value="CreateAsc">Время создания по возрастанию</option>
             <option value="LikeAsc">По лайкам по возрастанию</option>
@@ -128,6 +129,8 @@
 <script type ="module" src="../js/posts/postPage.js" defer></script>
 <script type ="module" src="../js/posts/showFullPost.js" defer></script>
 <script type ="module" src="../js/posts/showFullPost.js" defer></script>
+<script type ="module" src="../js/additionService/transitionWithName.js" defer></script>
+<script type ="module" src="../js/comments/showCommentsByImage.js" defer></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>

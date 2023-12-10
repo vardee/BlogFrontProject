@@ -37,7 +37,21 @@ export const loadPosts = async (communityId: string) => {
     const token = localStorage.getItem('token');
 
     url.search = urlParams.toString();
-    console.log(url.toString())
+    const tagsSelect = document.getElementById('tagsElements') as HTMLSelectElement;
+    const sorting = document.getElementById('sorting') as HTMLInputElement;
+    const size = document.getElementById('size') as HTMLInputElement;
+    if (tagsSelect) {
+        const tags = urlParams.getAll('tags');
+        Array.from(tagsSelect.options).forEach(option => {
+            option.selected = tags.includes(option.value);
+        });
+    }
+    if (sorting) {
+        sorting.value = urlParams.get('sorting') || '';
+    }
+    if (size) {
+        size.value = urlParams.get('size') || '5';
+    }
 
     try {
         const response = await fetch(url.toString(), {
@@ -70,7 +84,7 @@ export const loadPosts = async (communityId: string) => {
 
         const postTemplate = document.getElementById('postTemplate') as HTMLTemplateElement;
 
-        posts.forEach(async (post: { hasLike: boolean; id: string; title: string; description: string; author: string; createTime: string; image: string; tags: any[]; readingTime: any; commentsCount: any; likes: string; }) => {
+        posts.forEach(async (post: { hasLike: boolean; id: string; title: string; description: string; author: string; communityName:string, createTime: string; image: string; tags: any[]; readingTime: any; commentsCount: any; likes: string; }) => {
             const newPost = document.importNode(postTemplate.content, true);
             const postId = post.id;
             const postElement = newPost.querySelector('.post') as HTMLElement;
@@ -83,6 +97,7 @@ export const loadPosts = async (communityId: string) => {
             const readingTimeElement = newPost.querySelector('.post-reading-time') as HTMLElement;
             const commentsElement = newPost.querySelector('.post-comments') as HTMLElement;
             const likesElement = newPost.querySelector('.post-likes') as HTMLElement;
+            const communityNameElement = newPost.querySelector('.post-community') as HTMLElement;
             
             if (titleElement) {
                 titleElement.textContent = post.title ?? '';
@@ -91,14 +106,18 @@ export const loadPosts = async (communityId: string) => {
                     postLink.href = `/post/${post.id}`;
                 }
             }
+            if(communityNameElement){
+                communityNameElement.textContent = post.communityName ?? 'Без группы';
+            }
             if (descriptionElement) {
                 descriptionElement.innerHTML = post.description ?? '';
                 truncateText(descriptionElement, 150);
             }
             if (authorElement) authorElement.textContent = post.author ?? '';
             if (dateElement) {
-                const formattedDate = await formatDateTime(post.createTime);
-                dateElement.textContent = formattedDate;
+                const formattedDate = post.createTime ?? ' ';
+                const normalDate = await formatDateTime(post.createTime);
+                dateElement.textContent = normalDate;
             }
 
             if (postElement) {
@@ -138,13 +157,10 @@ export const loadPosts = async (communityId: string) => {
 };
 
 export const applyFilters = async () => {
-    console.log('applyFilters function called');
-    const tags = Array.from((document.getElementById('tagsElements') as HTMLSelectElement).selectedOptions).map(option => option.value);
-    const author = (document.getElementById('author') as HTMLInputElement).value;
-    const minReadingTime = (document.getElementById('minReadingTime') as HTMLInputElement).value;
-    const maxReadingTime = (document.getElementById('maxReadingTime') as HTMLInputElement).value;
+    console.log('Функция applyFilters вызвана');
+    const tagsSelect = document.getElementById('tagsElements') as HTMLSelectElement;
+    const selectedTags = Array.from(tagsSelect.selectedOptions).map(option => option.value);
     const sorting = (document.getElementById('sorting') as HTMLSelectElement).value;
-    const onlyMyCommunities = (document.getElementById('onlyMyCommunities') as HTMLInputElement).checked;
     let size = (document.getElementById('size') as HTMLInputElement).value;
 
     if (size.trim() === '') {
@@ -152,12 +168,18 @@ export const applyFilters = async () => {
     }
 
     const params = new URLSearchParams();
-    tags.forEach(tag => params.append('tags', tag));
-    if (author.trim() !== '') params.set('author', author);
-    if (minReadingTime.trim() !== '') params.set('minReadingTime', minReadingTime);
-    if (maxReadingTime.trim() !== '') params.set('maxReadingTime', maxReadingTime);
+
+    const urlParams = new URLSearchParams(window.location.search);
+    for (const key of urlParams.keys()) {
+        if (key !== 'tags') {
+            params.append(key, urlParams.get(key) || '');
+        }
+    }
+
+    selectedTags.forEach(tag => {
+        params.append('tags', tag);
+    });
     if (sorting.trim() !== '') params.set('sorting', sorting);
-    if (onlyMyCommunities) params.set('onlyMyCommunities', String(onlyMyCommunities));
     params.set('size', size);
 
     window.history.pushState({}, '', `?${params.toString()}`);

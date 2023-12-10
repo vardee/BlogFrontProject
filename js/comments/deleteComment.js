@@ -6,6 +6,7 @@ document.body.addEventListener('click', async (event) => {
         const commentId = commentDetails?.dataset.commentId;
         if (commentId) {
             await deleteComment(commentId);
+            window.location.reload();
         }
         else {
             console.error('Comment ID is undefined');

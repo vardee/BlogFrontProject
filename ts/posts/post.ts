@@ -44,6 +44,37 @@ const loadPosts = async () => {
     const token = localStorage.getItem('token');
 
     url.search = urlParams.toString();
+    const authorInput = document.getElementById('author') as HTMLInputElement;
+    const tagsSelect = document.getElementById('tagsElements') as HTMLSelectElement;
+    const minReadingTime = document.getElementById('minReadingTime') as HTMLInputElement;
+    const maxReadingTime = document.getElementById('maxReadingTime') as HTMLInputElement;
+    const sorting = document.getElementById('sorting') as HTMLSelectElement;
+    const onlyMyCommunities = document.getElementById('onlyMyCommunities') as HTMLInputElement;
+    const size = document.getElementById('size') as HTMLInputElement;
+    if (authorInput) {
+        authorInput.value = urlParams.get('author') || '';
+    }
+    if (tagsSelect) {
+        const tags = urlParams.getAll('tags');
+        Array.from(tagsSelect.options).forEach(option => {
+            option.selected = tags.includes(option.value);
+        });
+    }
+    if (minReadingTime) {
+        minReadingTime.value = urlParams.get('min') || '';
+    }
+    if (maxReadingTime) {
+        maxReadingTime.value = urlParams.get('max') || '';
+    }
+    if (sorting) {
+        sorting.value = urlParams.get('sorting') || '';
+    }
+    if (onlyMyCommunities) {
+        onlyMyCommunities.checked = urlParams.get('onlyMyCommunities') === 'true';
+    }
+    if (size) {
+        size.value = urlParams.get('size') || '5';
+    }
 
     try {
         const response = await fetch(url.toString(), {
@@ -149,31 +180,56 @@ const loadPosts = async () => {
 };
 
 const applyFilters = async () => {
-    console.log('applyFilters function called');
-    const tags = Array.from((document.getElementById('tagsElements') as HTMLSelectElement).selectedOptions).map(option => option.value);
-    const author = (document.getElementById('author') as HTMLInputElement).value;
-    const minReadingTime = (document.getElementById('minReadingTime') as HTMLInputElement).value;
-    const maxReadingTime = (document.getElementById('maxReadingTime') as HTMLInputElement).value;
-    const sorting = (document.getElementById('sorting') as HTMLSelectElement).value;
-    const onlyMyCommunities = (document.getElementById('onlyMyCommunities') as HTMLInputElement).checked;
-    let size = (document.getElementById('size') as HTMLInputElement).value;
+    console.log('Функция applyFilters вызвана');
+    const tagsSelect = document.getElementById('tagsElements') as HTMLSelectElement;
+    const selectedTags = Array.from(tagsSelect.selectedOptions).map(option => option.value);
 
-    if (size.trim() === '') {
-        size = '5';
-    }
+    const authorInput = document.getElementById('author') as HTMLInputElement;
+    const minReadingTime = document.getElementById('minReadingTime') as HTMLInputElement;
+    const maxReadingTime = document.getElementById('maxReadingTime') as HTMLInputElement;
+    const sorting = document.getElementById('sorting') as HTMLSelectElement;
+    const onlyMyCommunities = document.getElementById('onlyMyCommunities') as HTMLInputElement;
+    const sizeInput = document.getElementById('size') as HTMLInputElement;
+
+    let size = sizeInput.value.trim() === '' ? '5' : sizeInput.value;
 
     const params = new URLSearchParams();
-    tags.forEach(tag => params.append('tags', tag));
-    if (author.trim() !== '') params.set('author', author);
-    if (minReadingTime.trim() !== '') params.set('minReadingTime', minReadingTime);
-    if (maxReadingTime.trim() !== '') params.set('maxReadingTime', maxReadingTime);
-    if (sorting.trim() !== '') params.set('sorting', sorting);
-    if (onlyMyCommunities) params.set('onlyMyCommunities', String(onlyMyCommunities));
+
+    const urlParams = new URLSearchParams(window.location.search);
+
+    for (const key of urlParams.keys()) {
+        if (key !== 'tags' && key !== 'author') {
+            params.append(key, urlParams.get(key) || '');
+        }
+    }
+
+    selectedTags.forEach(tag => {
+        params.append('tags', tag);
+    });
+
+    const author = authorInput.value.trim();
+    if (author !== '') {
+        params.set('author', author);
+    }
+
+    if (minReadingTime.value.trim() !== '') params.set('minReadingTime', minReadingTime.value);
+    if (maxReadingTime.value.trim() !== '') params.set('maxReadingTime', maxReadingTime.value);
+    if (sorting.value.trim() !== '') params.set('sorting', sorting.value);
+
+    if (onlyMyCommunities) {
+        params.set('onlyMyCommunities', String(onlyMyCommunities.checked));
+    }
+
     params.set('size', size);
 
     window.history.pushState({}, '', `?${params.toString()}`);
     await loadPosts();
 };
+
+
+
+
+
 
 
 
@@ -226,7 +282,6 @@ const updatePagination = (pageCount: number, currentPage: number) => {
         paginationContainer.appendChild(pageItem);
     }
 };
-
 
 
 console.log('Calling loadPosts from the beginning');

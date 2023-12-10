@@ -1,3 +1,6 @@
+import { getPost } from "../posts/getPostInformation.js";
+import { displayComments } from "./displayComment.js";
+
 document.body.addEventListener('click', async (event: Event) => {
     const target = event.target as HTMLElement;
 
@@ -9,6 +12,7 @@ document.body.addEventListener('click', async (event: Event) => {
 
         if (commentId) {
             await deleteComment(commentId);
+            window.location.reload();
         } else {
             console.error('Comment ID is undefined');
         }
