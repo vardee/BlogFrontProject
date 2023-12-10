@@ -4,9 +4,6 @@ export async function updateNavbar(): Promise<void> {
     const unauthorizedNavbar = document.getElementById('unauthorizedNavbar');
     const authorizedNavbar = document.getElementById('authorizedNavbar');
     const userEmailElement = document.getElementById('userEmail');
-
-    console.log(unauthorizedNavbar);
-    console.log(authorizedNavbar);
     if (!unauthorizedNavbar || !authorizedNavbar) {
         console.error('Один из элементов навбара не найден.');
         return;

@@ -39,7 +39,6 @@ document.getElementById('writePostForm')?.addEventListener('submit', async funct
         return;
     }
     const selectedCommunityId = communitiesSelect.value;
-    console.log(selectedCommunityId);
     let writePostURL = "";
     if (selectedCommunityId) {
         writePostURL = `https://blog.kreosoft.space/api/community/${selectedCommunityId}/post`;
@@ -47,8 +46,6 @@ document.getElementById('writePostForm')?.addEventListener('submit', async funct
     else {
         writePostURL = 'https://blog.kreosoft.space/api/post';
     }
-    console.log(JSON.stringify(requestData));
-    console.log(writePostURL);
     try {
         const response = await fetch(writePostURL, {
             method: 'POST',

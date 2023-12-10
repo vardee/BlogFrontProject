@@ -10,12 +10,9 @@ document.getElementById('addCommentForm')?.addEventListener('submit', async func
     const requestData = {
         content: commentText,
     };
-    console.log(token);
     const path = window.location.pathname;
-    console.log(path);
     if (path.startsWith("/post/")) {
         const postId = path.split("/")[2];
-        console.log(postId);
         if (postId) {
             const commentPostURL = `https://blog.kreosoft.space/api/post/${postId}/comment`;
             fetch(commentPostURL, {

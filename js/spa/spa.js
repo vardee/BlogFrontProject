@@ -73,7 +73,6 @@ const handleLocation = async (path = window.location.pathname) => {
 
             if (isMatch) {
                 routePath = routePage;
-                console.log("Matched route:", route, "with params:", params);
                 break;
             }
         }
@@ -84,7 +83,6 @@ const handleLocation = async (path = window.location.pathname) => {
     if (token && ((path === "/login/") || (path === "/registration/"))) {
         window.history.pushState({}, '', '/');
         window.location.reload();
-        console.log("asdasdasdasd");
     }
 
     if (path === "/" || path === "/post/create") {

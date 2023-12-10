@@ -1,7 +1,6 @@
 export async function getCommentTree(commentId) {
     const commentDataURL = `https://blog.kreosoft.space/api/comment/${commentId}/tree`;
     const token = localStorage.getItem('token');
-    console.log(commentId);
     if (commentDataURL == `https://blog.kreosoft.space/api/comment/${commentId}/tree`) {
         try {
             const response = await fetch(commentDataURL, {
@@ -22,7 +21,7 @@ export async function getCommentTree(commentId) {
         }
     }
     else {
-        console.log('Пользователь не авторизован');
-        throw new Error('Пользователь не авторизован');
+        console.log('Произошла ошибка');
+        throw new Error('Произошла ошибка');
     }
 }

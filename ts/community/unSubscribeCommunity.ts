@@ -7,9 +7,7 @@ document.body.addEventListener('click', async (event: Event) => {
         event.preventDefault();
 
         const communityDetails = target.closest('.subscribe-btn-container') as HTMLElement | null;
-        console.log(communityDetails)
         const communityId = communityDetails?.dataset.communityId;
-        console.log(communityId);
 
         if (communityId) {
             await unsubscribeCommunity(communityId);

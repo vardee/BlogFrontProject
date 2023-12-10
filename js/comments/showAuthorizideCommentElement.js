@@ -19,7 +19,6 @@ export async function updateCommentUI(postId) {
         if (comment.subComments && typeof comment.subComments === 'number' && comment.subComments > 0) {
             try {
                 const subComments = await getCommentTree(comment.id);
-                console.log(subComments);
                 if (Array.isArray(subComments) && subComments.length > 0) {
                     for (let i = 0; i < subComments.length; i++) {
                         const subComment = subComments[i];

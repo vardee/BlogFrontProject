@@ -4,9 +4,7 @@ document.body.addEventListener('click', async (event) => {
     if (target.classList.contains('unsubscribe-community')) {
         event.preventDefault();
         const communityDetails = target.closest('.subscribe-btn-container');
-        console.log(communityDetails);
         const communityId = communityDetails?.dataset.communityId;
-        console.log(communityId);
         if (communityId) {
             await unsubscribeCommunity(communityId);
             await updateCommunityButtonsUI();

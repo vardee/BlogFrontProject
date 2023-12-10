@@ -21,7 +21,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
         }
         else {
-            console.log("vsepiszdec");
         }
     }
     catch (error) {
@@ -30,12 +29,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 const displayPost = async (post) => {
     const postContainer = document.getElementById('postEl');
-    console.log("asdkjawidiuawuidhawiudhwa");
     if (!postContainer) {
         console.error('Элемент "postContainer" не найден.');
         return;
     }
-    console.log("asdkjawidiuawuidhawiudhwa");
     postContainer.innerHTML = '';
     const postTemplate = document.getElementById('postExample');
     const newPost = document.importNode(postTemplate.content, true);

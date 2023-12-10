@@ -83,7 +83,6 @@ const loadPosts = async () => {
         const posts = data.posts;
         const pageCount = data.pagination.count;
         const current = data.pagination.current;
-        console.log(pageCount);
         updatePagination(pageCount, current);
         const postsContainer = document.getElementById('posts');
         if (!postsContainer) {

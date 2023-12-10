@@ -56,7 +56,6 @@ document.getElementById('writePostForm')?.addEventListener('submit', async funct
     }
 
     const selectedCommunityId = communitiesSelect.value;
-    console.log(selectedCommunityId);
 
     let writePostURL = "";
     if (selectedCommunityId) {
@@ -64,9 +63,6 @@ document.getElementById('writePostForm')?.addEventListener('submit', async funct
     } else {
         writePostURL = 'https://blog.kreosoft.space/api/post';
     }
-
-    console.log(JSON.stringify(requestData));
-    console.log(writePostURL)
     try {
         const response = await fetch(writePostURL, {
             method: 'POST',

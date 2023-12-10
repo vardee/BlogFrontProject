@@ -40,7 +40,6 @@ document.body.addEventListener('click', async (event) => {
             const requestData = {
                 content: commentEditText
             };
-            console.log(JSON.stringify(requestData));
             try {
                 const response = await fetch(commentEditURL, {
                     method: 'PUT',

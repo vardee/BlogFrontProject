@@ -2,7 +2,6 @@
 document.body.addEventListener('click', async (event) => {
     const target = event.target;
     const authorCardElement = target.closest('.author');
-    console.log(authorCardElement);
     if (authorCardElement) {
         const authorName = authorCardElement.getAttribute('data-author-name');
         if (authorName && authorName.trim() !== '') {

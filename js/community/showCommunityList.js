@@ -20,7 +20,6 @@ export const displayCommunity = async () => {
                 const communityId = community.id;
                 if (communtyIdElement) {
                     communtyIdElement.dataset.communityId = communityId;
-                    console.log(communtyIdElement.dataset.communityId);
                 }
                 if (communityLink) {
                     communityLink.href = `/communities/${community.id}`;

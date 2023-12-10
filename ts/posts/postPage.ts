@@ -22,7 +22,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                 console.error('ID поста не найден в URL.');
             }
         } else {
-            console.log("vsepiszdec");
         }
     } catch (error) {
         console.error('Ошибка при загрузке поста:', (error as Error).message);
@@ -32,12 +31,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 const displayPost = async (post: PostData) => {
     const postContainer = document.getElementById('postEl');
-    console.log("asdkjawidiuawuidhawiudhwa")
     if (!postContainer) {
         console.error('Элемент "postContainer" не найден.');
         return;
     }
-    console.log("asdkjawidiuawuidhawiudhwa")
 
     postContainer.innerHTML = '';
 
