@@ -7,11 +7,17 @@ document.body.addEventListener('click', async (event) => {
         event.stopPropagation();
         const commentDetails = target.closest('.comment-details');
         const commentReplyFormContainer = commentDetails?.querySelector('.comment-reply-form-container');
-        const commentId = commentDetails?.dataset.commentId;
-        if (commentReplyFormContainer) {
-            commentReplyFormContainer.style.display = 'block';
-            const commentInput = commentReplyFormContainer.querySelector('.comment-input');
-            if (commentInput) {
+        const commentInput = commentReplyFormContainer?.querySelector('.comment-input');
+        if (commentDetails && commentReplyFormContainer && commentInput) {
+            const openReplyForms = document.querySelectorAll('.comment-reply-form-container');
+            openReplyForms.forEach((form) => {
+                form.style.display = 'none';
+            });
+            if (commentReplyFormContainer.style.display === 'block') {
+                commentReplyFormContainer.style.display = 'none';
+            }
+            else {
+                commentReplyFormContainer.style.display = 'block';
                 commentInput.focus();
             }
         }

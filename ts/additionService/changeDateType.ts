@@ -30,36 +30,4 @@ export async function formatDateTimeAuthors(dateTimeString: string) {
     return formattedDate.toLocaleString(undefined, options);
 }
 
-export function formatDateStringToISOString(dateString: string): string {
-    try {
-        // Log the input string to check its value
-        console.log("Input dateString:", dateString);
-
-        // Split the string into day, month, and year
-        const [day, month, year] = dateString.split('.');
-
-        // Log the individual components
-        console.log("Day:", day);
-        console.log("Month:", month);
-        console.log("Year:", year);
-
-        // Create a new Date object
-        const dateObject = new Date(`${year}-${month}-${day}T00:00:00`);
-
-        // Log the generated Date object
-        console.log("Generated Date:", dateObject);
-
-        // Format the Date object to a string
-        const formattedISOString = dateObject.toISOString().slice(0, 19).replace("T", " ");
-
-        // Log the final formatted string
-        console.log("Formatted String:", formattedISOString);
-
-        return formattedISOString;
-    } catch (error) {
-        console.error("Error during formatting:", (error as Error).message);
-        throw error;
-    }
-}
-
 

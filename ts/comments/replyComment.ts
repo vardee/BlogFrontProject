@@ -10,12 +10,18 @@ document.body.addEventListener('click', async (event: Event) => {
 
         const commentDetails = target.closest('.comment-details') as HTMLElement | null;
         const commentReplyFormContainer = commentDetails?.querySelector('.comment-reply-form-container') as HTMLElement | null;
-        const commentId = commentDetails?.dataset.commentId;
+        const commentInput = commentReplyFormContainer?.querySelector('.comment-input') as HTMLInputElement | null;
 
-        if (commentReplyFormContainer) {
-            commentReplyFormContainer.style.display = 'block';
-            const commentInput = commentReplyFormContainer.querySelector('.comment-input') as HTMLInputElement | null;
-            if (commentInput) {
+        if (commentDetails && commentReplyFormContainer && commentInput) {
+            const openReplyForms = document.querySelectorAll('.comment-reply-form-container') as NodeListOf<HTMLElement>;
+            openReplyForms.forEach((form) => {
+                form.style.display = 'none';
+            });
+
+            if (commentReplyFormContainer.style.display === 'block') {
+                commentReplyFormContainer.style.display = 'none';
+            } else {
+                commentReplyFormContainer.style.display = 'block';
                 commentInput.focus();
             }
         }
