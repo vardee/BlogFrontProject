@@ -146,7 +146,7 @@ export const loadPosts = async (communityId) => {
 export const applyFilters = async () => {
     console.log('Функция applyFilters вызвана');
     const tagsSelect = document.getElementById('tagsElements');
-    const selectedTags = Array.from(tagsSelect.selectedOptions).map(option => option.value);
+    const selectedTags = Array.from(tagsSelect.selectedOptions).map(option => option.value).filter(tag => tag.trim() !== '');
     const sorting = document.getElementById('sorting').value;
     let size = document.getElementById('size').value;
     if (size.trim() === '') {

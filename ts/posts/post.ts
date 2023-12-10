@@ -182,7 +182,7 @@ const loadPosts = async () => {
 const applyFilters = async () => {
     console.log('Функция applyFilters вызвана');
     const tagsSelect = document.getElementById('tagsElements') as HTMLSelectElement;
-    const selectedTags = Array.from(tagsSelect.selectedOptions).map(option => option.value);
+    const selectedTags = Array.from(tagsSelect.selectedOptions).map(option => option.value).filter(tag => tag.trim() !== ''); // Исключаем пустые теги
 
     const authorInput = document.getElementById('author') as HTMLInputElement;
     const minReadingTime = document.getElementById('minReadingTime') as HTMLInputElement;
@@ -225,6 +225,7 @@ const applyFilters = async () => {
     window.history.pushState({}, '', `?${params.toString()}`);
     await loadPosts();
 };
+
 
 
 

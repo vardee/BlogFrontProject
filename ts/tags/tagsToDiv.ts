@@ -8,6 +8,10 @@ export async function addTagsToDiv(): Promise<void> {
         if (!tagsContainer) {
             return;
         }
+        const defaultOption = document.createElement('option');
+        defaultOption.value = '';
+        defaultOption.textContent = '--';
+        tagsContainer.appendChild(defaultOption);
 
         tagsFromServer.forEach(tag => {
             const option = document.createElement('option');

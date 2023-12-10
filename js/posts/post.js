@@ -164,7 +164,7 @@ const loadPosts = async () => {
 const applyFilters = async () => {
     console.log('Функция applyFilters вызвана');
     const tagsSelect = document.getElementById('tagsElements');
-    const selectedTags = Array.from(tagsSelect.selectedOptions).map(option => option.value);
+    const selectedTags = Array.from(tagsSelect.selectedOptions).map(option => option.value).filter(tag => tag.trim() !== ''); // Исключаем пустые теги
     const authorInput = document.getElementById('author');
     const minReadingTime = document.getElementById('minReadingTime');
     const maxReadingTime = document.getElementById('maxReadingTime');
