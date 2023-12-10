@@ -8,7 +8,7 @@
         <div class="post-details row g-3">
             <div class="col-md-12">
                 <p class="post-author-date">
-                    <span class="post-author"></span> - <span class="post-date"></span>
+                    <span class="post-author"></span> - <span class="post-date"></span> - <span class="post-community"></span>
                 </p>
                 <a class="post-link"><h2 class="post-title text-wrap"></h2></a>
             </div>
@@ -31,6 +31,11 @@
             <div class="col-md-12">
                 <p class="post-reading-time"></p>
             </div>
+            <div class="col-md-12 d-flex align-items-center">
+                <img id="geoIcon" class="geo-icon img-fluid" src="../image/geo.png" alt="Comment Icon" style="max-width: 30px; max-height: 30px;">
+                <p class="post-address mt-4"></p>
+            </div>
+            
             <div class="col-md-12">
                 <hr>
             </div>
@@ -46,7 +51,7 @@
     </div>
 </template>
 <template id="commentExample">
-    <div class="comment-exm mt-5 mb-3 border p-3 rounded mx-auto col-md-8">
+    <div class="comment-exm mt-5 mb-3 border p-3 rounded mx-auto col-md-8 top-level-comment">
         <div class="comment-details row g-3" data-comment-id="">
             <div class="col-md-12">
                 <p class="comment-author-date">
@@ -92,7 +97,7 @@
         <h2 class="commentar-title">Комментарии</h2>
     </div>
     <hr class="my-2">
-    <div id="commentsContainer">
+    <div class = "comment-main" id="commentsContainer">
     </div>
 </div>
 <div id="commentForm">

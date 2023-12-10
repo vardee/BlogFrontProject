@@ -1,6 +1,10 @@
 import { displayComments } from "../comments/displayComment.js";
 import { PostData, getPost} from "./getPostInformation.js";
 import { updateCommentUI } from "../comments/showAuthorizideCommentElement.js";
+import { formatDateTime } from "../additionService/changeDateType.js";
+import { AddressData, getAddressChain } from "../addresses/getAddresschain.js";
+import { createStringFromAddressObjects } from "../additionService/doStringForAddress.js";
+import { truncateText } from "./showFullPost.js";
 
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -26,7 +30,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 
 
-const displayPost = (post: PostData) => {
+const displayPost = async (post: PostData) => {
     const postContainer = document.getElementById('postEl');
     console.log("asdkjawidiuawuidhawiudhwa")
     if (!postContainer) {
@@ -50,14 +54,32 @@ const displayPost = (post: PostData) => {
     const readingTimeElement = newPost.querySelector('.post-reading-time') as HTMLElement;
     const commentsElement = newPost.querySelector('.post-comments') as HTMLElement;
     const likesElement = newPost.querySelector('.post-likes') as HTMLElement;
+    const communityNameElement = newPost.querySelector('.post-community') as HTMLElement;
+    const postAddressElement = newPost.querySelector('.post-address') as HTMLElement;
 
+    if (postAddressElement) {
+        if(post.addressId === null){
+            postAddressElement.textContent = 'Кажется, создатель этого поста не указал адрес :('
+        }
+        else{
+            const addressArray: AddressData[] = await getAddressChain(post.addressId);
+            const addressString = await createStringFromAddressObjects(addressArray)
+            postAddressElement.textContent = addressString;
+        }
+    }
+    
+    
     if (titleElement) {
         titleElement.textContent = post.title ?? '';
     }
-    if (descriptionElement) descriptionElement.innerHTML = post.description ?? '';
+    if (descriptionElement) {
+        descriptionElement.innerHTML = post.description ?? '';
+        truncateText(descriptionElement, 150);
+    }
     if (authorElement) authorElement.textContent = post.author ?? '';
     if (dateElement) {
-        const formattedDate = post.createTime ?? 'Некорректная дата';
+        const formattedDate = await formatDateTime(post.createTime);
+
         dateElement.textContent = formattedDate;
     }
 
@@ -73,6 +95,9 @@ const displayPost = (post: PostData) => {
         } else {
             imageElement.parentElement?.classList.add('d-none');
         }
+    }
+    if(communityNameElement){
+        communityNameElement.textContent = post.communityName ?? 'Без группы';
     }
 
     if (tagsElement) {

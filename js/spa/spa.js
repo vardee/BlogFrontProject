@@ -4,6 +4,7 @@ import { showCommunityFullInformation } from "../community/communityInformationP
 import { displayCommunity } from "../community/showCommunityList.js";
 import {addCommunitiesToDiv} from "../community/communititesToDiv.js"
 import { displayAuthors } from "../authors/showAuthorsList.js";
+import {truncateText} from "../posts/showFullPost.js"
 
 export function loadScripts(scriptCode) {
     const container = document.createElement('div');

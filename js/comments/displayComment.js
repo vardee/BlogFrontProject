@@ -1,3 +1,4 @@
+import { showAllSubComments } from "../additionService/showSubComments.js";
 import { getCommentTree } from "./getComment.js";
 export const displayComments = async (post) => {
     const commentContainer = document.getElementById('commentsContainer');
@@ -15,6 +16,7 @@ export const displayComments = async (post) => {
         const commentDateElement = newComment.querySelector('.comment-date');
         const commentContentElement = newComment.querySelector('.comment-text');
         const subCommentsContainerElement = newComment.querySelector('.sub-comments');
+        const mainComment = newComment.querySelector('.top-level-comment');
         if (commentIdElement) {
             commentIdElement.dataset.commentId = commentId;
         }
@@ -34,6 +36,7 @@ export const displayComments = async (post) => {
             }
         }
         if (commentData.subComments > 0) {
+            showAllSubComments(subCommentsContainerElement);
             const subCommentsArray = await getCommentTree(commentData.id);
             if (Array.isArray(subCommentsArray) && subCommentsArray.length > 0) {
                 for (const subComment of subCommentsArray) {

@@ -1,3 +1,5 @@
+import { formatDateTime } from "../additionService/changeDateType.js";
+import { truncateText } from "../posts/showFullPost.js";
 document.getElementById('filterForm')?.addEventListener('submit', async function (event) {
     event.preventDefault();
     console.log('Filter form submitted');
@@ -58,7 +60,7 @@ export const loadPosts = async (communityId) => {
         }
         postsContainer.innerHTML = '';
         const postTemplate = document.getElementById('postTemplate');
-        posts.forEach((post) => {
+        posts.forEach(async (post) => {
             const newPost = document.importNode(postTemplate.content, true);
             const postId = post.id;
             const postElement = newPost.querySelector('.post');
@@ -78,12 +80,14 @@ export const loadPosts = async (communityId) => {
                     postLink.href = `/post/${post.id}`;
                 }
             }
-            if (descriptionElement)
+            if (descriptionElement) {
                 descriptionElement.innerHTML = post.description ?? '';
+                truncateText(descriptionElement, 150);
+            }
             if (authorElement)
                 authorElement.textContent = post.author ?? '';
             if (dateElement) {
-                const formattedDate = post.createTime ?? 'Некорректная дата';
+                const formattedDate = await formatDateTime(post.createTime);
                 dateElement.textContent = formattedDate;
             }
             if (postElement) {

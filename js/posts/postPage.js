@@ -1,6 +1,10 @@
 import { displayComments } from "../comments/displayComment.js";
 import { getPost } from "./getPostInformation.js";
 import { updateCommentUI } from "../comments/showAuthorizideCommentElement.js";
+import { formatDateTime } from "../additionService/changeDateType.js";
+import { getAddressChain } from "../addresses/getAddresschain.js";
+import { createStringFromAddressObjects } from "../additionService/doStringForAddress.js";
+import { truncateText } from "./showFullPost.js";
 document.addEventListener('DOMContentLoaded', async () => {
     try {
         const path = window.location.pathname;
@@ -24,7 +28,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         console.error('Ошибка при загрузке поста:', error.message);
     }
 });
-const displayPost = (post) => {
+const displayPost = async (post) => {
     const postContainer = document.getElementById('postEl');
     console.log("asdkjawidiuawuidhawiudhwa");
     if (!postContainer) {
@@ -45,15 +49,29 @@ const displayPost = (post) => {
     const readingTimeElement = newPost.querySelector('.post-reading-time');
     const commentsElement = newPost.querySelector('.post-comments');
     const likesElement = newPost.querySelector('.post-likes');
+    const communityNameElement = newPost.querySelector('.post-community');
+    const postAddressElement = newPost.querySelector('.post-address');
+    if (postAddressElement) {
+        if (post.addressId === null) {
+            postAddressElement.textContent = 'Кажется, создатель этого поста не указал адрес :(';
+        }
+        else {
+            const addressArray = await getAddressChain(post.addressId);
+            const addressString = await createStringFromAddressObjects(addressArray);
+            postAddressElement.textContent = addressString;
+        }
+    }
     if (titleElement) {
         titleElement.textContent = post.title ?? '';
     }
-    if (descriptionElement)
+    if (descriptionElement) {
         descriptionElement.innerHTML = post.description ?? '';
+        truncateText(descriptionElement, 150);
+    }
     if (authorElement)
         authorElement.textContent = post.author ?? '';
     if (dateElement) {
-        const formattedDate = post.createTime ?? 'Некорректная дата';
+        const formattedDate = await formatDateTime(post.createTime);
         dateElement.textContent = formattedDate;
     }
     if (postElement) {
@@ -68,6 +86,9 @@ const displayPost = (post) => {
         else {
             imageElement.parentElement?.classList.add('d-none');
         }
+    }
+    if (communityNameElement) {
+        communityNameElement.textContent = post.communityName ?? 'Без группы';
     }
     if (tagsElement) {
         const tagNames = post.tags?.map(tag => `#${tag.name}`).join(' ') ?? '';

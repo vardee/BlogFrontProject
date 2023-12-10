@@ -1,4 +1,6 @@
 import { getTags } from "../tags/tags.js";
+import { formatDateTime } from "../additionService/changeDateType.js";
+import { truncateText } from "./showFullPost.js";
 
 document.addEventListener('DOMContentLoaded', async () => {
     console.log('DOMContentLoaded event triggered');
@@ -74,7 +76,7 @@ const loadPosts = async () => {
 
         const postTemplate = document.getElementById('postTemplate') as HTMLTemplateElement;
 
-        posts.forEach((post: { hasLike: boolean; id: string; title: string; description: string; author: string; communityName:string, createTime: string; image: string; tags: any[]; readingTime: any; commentsCount: any; likes: string; }) => {
+        posts.forEach(async (post: { hasLike: boolean; id: string; title: string; description: string; author: string; communityName:string, createTime: string; image: string; tags: any[]; readingTime: any; commentsCount: any; likes: string; }) => {
             const newPost = document.importNode(postTemplate.content, true);
             const postId = post.id;
             const postElement = newPost.querySelector('.post') as HTMLElement;
@@ -99,11 +101,15 @@ const loadPosts = async () => {
             if(communityNameElement){
                 communityNameElement.textContent = post.communityName ?? 'Без группы';
             }
-            if (descriptionElement) descriptionElement.innerHTML = post.description ?? '';
+            if (descriptionElement) {
+                descriptionElement.innerHTML = post.description ?? '';
+                truncateText(descriptionElement, 150);
+            }
             if (authorElement) authorElement.textContent = post.author ?? '';
             if (dateElement) {
-                const formattedDate = post.createTime ?? 'Некорректная дата';
-                dateElement.textContent = formattedDate;
+                const formattedDate = post.createTime ?? ' ';
+                const normalDate = await formatDateTime(post.createTime);
+                dateElement.textContent = normalDate;
             }
 
             if (postElement) {

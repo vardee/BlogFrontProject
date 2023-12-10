@@ -1,3 +1,5 @@
+import { formatDateTime } from "../additionService/changeDateType.js";
+import { truncateText } from "./showFullPost.js";
 document.addEventListener('DOMContentLoaded', async () => {
     console.log('DOMContentLoaded event triggered');
     await loadPosts();
@@ -59,7 +61,7 @@ const loadPosts = async () => {
         }
         postsContainer.innerHTML = '';
         const postTemplate = document.getElementById('postTemplate');
-        posts.forEach((post) => {
+        posts.forEach(async (post) => {
             const newPost = document.importNode(postTemplate.content, true);
             const postId = post.id;
             const postElement = newPost.querySelector('.post');
@@ -83,13 +85,16 @@ const loadPosts = async () => {
             if (communityNameElement) {
                 communityNameElement.textContent = post.communityName ?? 'Без группы';
             }
-            if (descriptionElement)
+            if (descriptionElement) {
                 descriptionElement.innerHTML = post.description ?? '';
+                truncateText(descriptionElement, 150);
+            }
             if (authorElement)
                 authorElement.textContent = post.author ?? '';
             if (dateElement) {
-                const formattedDate = post.createTime ?? 'Некорректная дата';
-                dateElement.textContent = formattedDate;
+                const formattedDate = post.createTime ?? ' ';
+                const normalDate = await formatDateTime(post.createTime);
+                dateElement.textContent = normalDate;
             }
             if (postElement) {
                 postElement.dataset.postId = postId;
@@ -195,4 +200,3 @@ const updatePagination = (pageCount, currentPage) => {
 };
 console.log('Calling loadPosts from the beginning');
 await loadPosts();
-export {};

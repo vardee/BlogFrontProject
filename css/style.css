@@ -64,3 +64,6 @@ body {
         width: 100%;
     }
 }
+.show-sub-comments-button {
+    display: inline;
+}

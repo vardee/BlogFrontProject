@@ -1,4 +1,5 @@
 import { getAuthorsList } from "./getAuthors.js";
+import { formatDateTimeAuthors } from "../additionService/changeDateType.js";
 export const displayAuthors = async () => {
     const authorsContainer = document.getElementById('authorContainer');
     if (!authorsContainer) {
@@ -35,10 +36,10 @@ export const displayAuthors = async () => {
                 authorName.textContent = author.fullName;
             }
             if (createdDate) {
-                createdDate.textContent = author.created;
+                createdDate.textContent = await formatDateTimeAuthors(author.created);
             }
             if (birthDate) {
-                birthDate.textContent = author.birthDate;
+                birthDate.textContent = await formatDateTimeAuthors(author.birthDate);
             }
             if (postCount) {
                 postCount.textContent = String(author.posts);
