@@ -7,18 +7,23 @@ document.body.addEventListener('click', async (event: Event) => {
 
         const commentDetails = target.closest('.comment-details') as HTMLElement | null;
         const commentEditFormContainer = commentDetails?.querySelector('.comment-edit-form-container') as HTMLElement | null;
+        const commentEditInput = commentEditFormContainer?.querySelector('.comment-edit-input') as HTMLInputElement | null;
         const commentId = commentDetails?.dataset.commentId;
-        
+        const commentTextElement = commentDetails?.querySelector('.comment-text') as HTMLElement | null;
 
-        if (commentEditFormContainer) {
-            commentEditFormContainer.style.display = 'block';
-            const commentEditInput = commentEditFormContainer.querySelector('.comment-edit-input') as HTMLInputElement | null;
-            if (commentEditInput) {
+        if (commentEditFormContainer && commentEditInput && commentTextElement) {
+            if (commentEditFormContainer.style.display === 'block') {
+                commentEditFormContainer.style.display = 'none';
+            } else {
+                commentEditFormContainer.style.display = 'block';
+                commentEditInput.value = commentTextElement.textContent || '';
                 commentEditInput.focus();
             }
         }
     }
 });
+
+
 
 document.body.addEventListener('click', async (event: Event) => {
     const target = event.target as HTMLElement;

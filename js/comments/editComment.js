@@ -6,11 +6,16 @@ document.body.addEventListener('click', async (event) => {
         event.stopPropagation();
         const commentDetails = target.closest('.comment-details');
         const commentEditFormContainer = commentDetails?.querySelector('.comment-edit-form-container');
+        const commentEditInput = commentEditFormContainer?.querySelector('.comment-edit-input');
         const commentId = commentDetails?.dataset.commentId;
-        if (commentEditFormContainer) {
-            commentEditFormContainer.style.display = 'block';
-            const commentEditInput = commentEditFormContainer.querySelector('.comment-edit-input');
-            if (commentEditInput) {
+        const commentTextElement = commentDetails?.querySelector('.comment-text');
+        if (commentEditFormContainer && commentEditInput && commentTextElement) {
+            if (commentEditFormContainer.style.display === 'block') {
+                commentEditFormContainer.style.display = 'none';
+            }
+            else {
+                commentEditFormContainer.style.display = 'block';
+                commentEditInput.value = commentTextElement.textContent || '';
                 commentEditInput.focus();
             }
         }
