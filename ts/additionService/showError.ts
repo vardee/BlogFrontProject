@@ -6,5 +6,5 @@ export async function showNotification(message: string) {
   
     setTimeout(() => {
       notification.remove();
-    }, 3000);
+    }, 10000);
   }

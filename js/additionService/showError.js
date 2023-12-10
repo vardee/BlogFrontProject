@@ -5,5 +5,5 @@ export async function showNotification(message) {
     document.body.appendChild(notification);
     setTimeout(() => {
         notification.remove();
-    }, 3000);
+    }, 10000);
 }
