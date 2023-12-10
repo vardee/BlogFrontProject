@@ -2,6 +2,8 @@ import { updateNavbar } from "../spa/navbar.js";
 const logoutURL = "https://blog.kreosoft.space/api/account/logout";
 document.getElementById('logout')?.addEventListener('click', function (event) {
     event.preventDefault();
+    localStorage.clear();
+    window.location.reload();
     const token = localStorage.getItem('token');
     if (!token) {
         console.error('Token not found in localStorage');
