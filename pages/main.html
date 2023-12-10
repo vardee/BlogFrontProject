@@ -5,7 +5,7 @@
 </head>
 <div class="container mt-3 justify-content-center">
     <label id="filterLabel" class="fs-4 fw-bold mb-3 ">Фильтры</label>
-    <form class="row g-3 col-12 mx-auto border p-2 rounded" id="filterForm">
+    <form class="row g-3 mx-auto border p-2 rounded" id="filterForm">
         <div class="col-md-4 border p-3 rounded">
             <label for="tags" class="form-label">Тэги</label>
             <select id="tagsElements" class="form-select" name="tags" multiple>
@@ -86,9 +86,7 @@
             </div>
             <div class="col-md-6">
                 <span class="post-comments"></span>
-                <img id="commentIcon" class="comment-icon img-fluid"  src="../image/chat-bubble.png" alt="Comment Icon" style="max-width: 20px; max-height: 20px;">
-            </div>
-            <div class="col-md-6 text-right">
+                <img id="commentIcon" class="comment-icon img-fluid" src="../image/chat-bubble.png" alt="Comment Icon" style="max-width: 20px; max-height: 20px;">
                 <span class="post-likes"></span>
                 <img id="likeIcon" class="like-icon img-fluid" src="../image/heartUnliked.png" alt="Like Icon" style="max-width: 20px; max-height: 20px;">
             </div>
@@ -115,7 +113,8 @@
     </ul>
 </nav>
 <nav aria-label="Page navigation example" class="d-flex justify-content-center mt-3">
-    <ul class="pagination" id="pagination">
+    <ul class="pagination pagination-sm" id="pagination">
+
     </ul>
 </nav>
 

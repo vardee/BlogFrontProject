@@ -4,16 +4,19 @@
     <link rel="stylesheet" type="text/css" href="../css/style.css">
 </head>
 <template id="communityTemplate">
-    <div class="community mt-5 mb-3 border p-3 rounded mx-auto col-md-8 d-flex justify-content-md-between">
+    <div class="community mt-5 mb-3 border p-3 rounded mx-auto col-md-8 d-md-flex justify-content-md-between">
         <div class="community-info" data-community-id="">
             <a class="community-link"><h3 class="community-name"></h3></a>
         </div>
         <div class="subscribe-btn-container text-md-right text-center" data-community-id="">
-            <button class="btn btn-primary subscribe-community" data-community-id="">Подписаться</button>
-            <button class="btn btn-danger unsubscribe-community" data-community-id="">Отписаться</button>
+            <div class="d-md-inline-block">
+                <button class="btn btn-primary subscribe-community" data-community-id="">Подписаться</button>
+                <button class="btn btn-danger unsubscribe-community" data-community-id="">Отписаться</button>
+            </div>
         </div>
     </div>
 </template>
+
 
 
 

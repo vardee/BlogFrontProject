@@ -90,7 +90,7 @@ const handleLocation = async (path = window.location.pathname) => {
     if (path === "/" || path === "/post/create") {
         addTagsToDiv();
     }
-    if(!token && (path === "/communities" || path === "/communities/" || path === "/authors")){
+    if(!token && (path === "/communities" || path === "/communities/" || path === "/authors/" || path === "/profile")){
         window.history.pushState({}, '', '/login/');
         window.location.reload();
     }

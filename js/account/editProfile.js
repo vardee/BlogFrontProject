@@ -1,4 +1,4 @@
-"use strict";
+import { validateRegistrationData } from "../additionService/informationValidation.js";
 const requestEditURL = "https://blog.kreosoft.space/api/account/profile";
 document.getElementById('editForm')?.addEventListener('submit', function (event) {
     event.preventDefault();
@@ -19,6 +19,12 @@ document.getElementById('editForm')?.addEventListener('submit', function (event)
     const datetime = document.getElementById('datetime').value;
     const gender = document.getElementById('gender').value;
     const phone = document.getElementById('phone').value;
+    const validationErrors = validateRegistrationData(username, datetime, email, phone);
+    if (validationErrors) {
+        errorMessageElement.textContent = validationErrors;
+        errorMessageElement.style.display = 'block';
+        return;
+    }
     const requestData = {
         fullName: username,
         email: email,
@@ -46,6 +52,7 @@ document.getElementById('editForm')?.addEventListener('submit', function (event)
     })
         .catch(error => {
         console.error('Ошибка смены данных:', error.message);
+        window.location.reload();
         if (error.response) {
             console.error('HTTP Status:', error.response.status);
             error.response.text().then((text) => {
@@ -55,7 +62,5 @@ document.getElementById('editForm')?.addEventListener('submit', function (event)
         else {
             console.error('Response Error:', error);
         }
-        errorMessageElement.textContent = 'Ошибка смены данных: ' + error.message;
-        errorMessageElement.style.display = 'block';
     });
 });

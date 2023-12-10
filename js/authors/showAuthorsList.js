@@ -14,12 +14,7 @@ export const displayAuthors = async () => {
     authorsContainer.innerHTML = '';
     try {
         const authorData = await getAuthorsList();
-        const sortedAuthors = authorData.sort((a, b) => {
-            const aPopularity = a.posts * 10 + a.likes;
-            const bPopularity = b.posts * 10 + b.likes;
-            return bPopularity - aPopularity;
-        });
-        const mostPopularAuthors = sortedAuthors.slice(0, 3);
+        const mostPopularAuthors = findMostPopularAuthors(authorData, 3);
         authorData.forEach(async (author) => {
             const authorInstance = document.importNode(authorTemplate.content, true);
             const authorInfo = authorInstance.querySelector('.author');
@@ -60,14 +55,16 @@ export const displayAuthors = async () => {
             else {
                 avatarImage.src = 'default.png';
             }
-            if (mostPopularAuthors[0] === author) {
-                goldCrown.style.display = 'block';
-            }
-            else if (mostPopularAuthors[1] === author) {
-                silverCrown.style.display = 'block';
-            }
-            else if (mostPopularAuthors[2] === author) {
-                bronzeCrown.style.display = 'block';
+            if (mostPopularAuthors.includes(author)) {
+                if (mostPopularAuthors[0] === author) {
+                    goldCrown.style.display = 'block';
+                }
+                else if (mostPopularAuthors[1] === author) {
+                    silverCrown.style.display = 'block';
+                }
+                else if (mostPopularAuthors[2] === author) {
+                    bronzeCrown.style.display = 'block';
+                }
             }
             authorsContainer.appendChild(authorInstance);
         });
@@ -75,4 +72,11 @@ export const displayAuthors = async () => {
     catch (error) {
         console.error('Ошибка при отображении сообществ:', error.message);
     }
+};
+const findMostPopularAuthors = (authors, count) => {
+    return authors.slice().sort((a, b) => {
+        const aPopularity = a.posts * 10 + a.likes;
+        const bPopularity = b.posts * 10 + b.likes;
+        return bPopularity - aPopularity;
+    }).slice(0, count);
 };

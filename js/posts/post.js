@@ -187,9 +187,9 @@ const applyFilters = async () => {
         params.set('author', author);
     }
     if (minReadingTime.value.trim() !== '')
-        params.set('minReadingTime', minReadingTime.value);
+        params.set('min', minReadingTime.value);
     if (maxReadingTime.value.trim() !== '')
-        params.set('maxReadingTime', maxReadingTime.value);
+        params.set('max', maxReadingTime.value);
     if (sorting.value.trim() !== '')
         params.set('sorting', sorting.value);
     if (onlyMyCommunities) {
@@ -206,7 +206,7 @@ const updatePagination = (pageCount, currentPage) => {
         return;
     }
     paginationContainer.innerHTML = '';
-    const maxVisiblePages = 10;
+    const maxVisiblePages = 5;
     const halfVisiblePages = Math.floor(maxVisiblePages / 2);
     let startPage = Math.max(currentPage - halfVisiblePages, 1);
     let endPage = Math.min(startPage + maxVisiblePages - 1, pageCount);

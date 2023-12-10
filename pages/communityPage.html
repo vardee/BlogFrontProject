@@ -29,44 +29,51 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6 text-right subscribe-btn-container">
-                    <button class="btn btn-success write-post" id="writePostBtn">Написать пост</button>
-                    <button class="btn btn-primary subscribe-community">Подписаться</button>
-                    <button class="btn btn-danger unsubscribe-community">Отписаться</button>
+                <div class="col-md-6 text-md-end mt-md-0 mt-2 subscribe-btn-container">
+                    <!-- Добавлен класс mt-2 для небольшого отступа вниз -->
+                    <div class="d-flex justify-content-md-end mt-5">
+                        <button class="btn btn-success write-post" id="writePostBtn">Написать пост</button>
+                        <button class="btn btn-primary subscribe-community">Подписаться</button>
+                        <button class="btn btn-danger unsubscribe-community">Отписаться</button>
+                    </div>
                 </div>
             </div>
         </div>
     </template>
     
     
-<div id="communityContainerInfo" class="row g-3"></div>
-<div class="container mt-3 justify-content-center">
-    <label id="filterLabel" class="fs-4 fw-bold mb-3 ">Фильтры</label>
-    <form class="row g-3 col-12 mx-auto border p-2 rounded" id="filterForm">
-        <div class="col-md-4 border p-3 rounded">
-            <label for="tags" class="form-label">Тэги</label>
-            <select id="tagsElements" class="form-select" name="tags" multiple>
-            </select>
-        </div>
-      <div class="col-md-4 border p-3 rounded">
-        <label for="sorting" class="form-label">Сортировка</label>
-        <select id="sorting" class="form-select" name="sorting">
-            <option value="">Выберите сортировку</option>
-            <option value="CreateDesc">Время создания по убыванию</option>
-            <option value="CreateAsc">Время создания по возрастанию</option>
-            <option value="LikeAsc">По лайкам по возрастанию</option>
-            <option value="LikeDesc">По лайкам по убыванию</option>
-        </select>
+    
+    
+    <div id="communityContainerInfo" class="row g-3"></div>
+    <div class="container mt-3 justify-content-center">
+        <label id="filterLabel" class="fs-4 fw-bold mb-3">Фильтры</label>
+        <form class="row g-3 col-12 mx-auto border p-2 rounded" id="filterForm">
+            <div class="col-md-4 border p-3 rounded me-auto"> <!-- Используем me-auto для установки расстояния от левой границы -->
+                <label for="tags" class="form-label">Тэги</label>
+                <select id="tagsElements" class="form-select" name="tags" multiple></select>
+            </div>
+            <div class="col-md-4 border p-3 rounded mx-auto"> <!-- Используем mx-auto для центрирования сортировки -->
+                <label for="sorting" class="form-label">Сортировка</label>
+                <select id="sorting" class="form-select" name="sorting">
+                    <option value="">Выберите сортировку</option>
+                    <option value="CreateDesc">Время создания по убыванию</option>
+                    <option value="CreateAsc">Время создания по возрастанию</option>
+                    <option value="LikeAsc">По лайкам по возрастанию</option>
+                    <option value="LikeDesc">По лайкам по убыванию</option>
+                </select>
+            </div>
+            <div class="col-md-2 border p-3 rounded ms-auto text-md-end"> <!-- Используем ms-auto для установки расстояния от правой границы -->
+                <label for="size" class="form-label">Количество постов</label>
+                <input type="number" class="form-control" id="size" name="size" placeholder="Количество">
+            </div>
+            <div class="col-12 mx-auto">
+                <button type="submit" class="btn btn-primary">Применить фильтры</button>
+            </div>
+        </form>
     </div>
-      <div class="col-md-2 border p-3 rounded">
-          <label for="size" class="form-label">Количество постов</label>
-          <input type="number" class="form-control" id="size" name="size" placeholder="Количество">
-      </div>
-      <div class="col-12">
-          <button type="submit" class="btn btn-primary">Применить фильтры</button>
-      </div>
-  </form>
-</div>
+    
+    
+    
 
 
 <template id="postTemplate">
@@ -103,9 +110,7 @@
             </div>
             <div class="col-md-6">
                 <span class="post-comments"></span>
-                <img id="commentIcon" class="comment-icon img-fluid"  src="../image/chat-bubble.png" alt="Comment Icon" style="max-width: 20px; max-height: 20px;">
-            </div>
-            <div class="col-md-6 text-right">
+                <img id="commentIcon" class="comment-icon img-fluid" src="../image/chat-bubble.png" alt="Comment Icon" style="max-width: 20px; max-height: 20px;">
                 <span class="post-likes"></span>
                 <img id="likeIcon" class="like-icon img-fluid" src="../image/heartUnliked.png" alt="Like Icon" style="max-width: 20px; max-height: 20px;">
             </div>

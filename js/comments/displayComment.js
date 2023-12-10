@@ -25,7 +25,13 @@ export const displayComments = async (post) => {
             commentAuthorElement.textContent = commentData.author;
         }
         if (commentDateElement) {
-            commentDateElement.textContent = await formatDateTime(commentData.createTime);
+            const formattedDate = await formatDateTime(commentData.createTime);
+            if (commentData.modifiedDate) {
+                commentDateElement.innerHTML = `${formattedDate} <span style="color: red;">(изменен)</span>`;
+            }
+            else {
+                commentDateElement.textContent = formattedDate;
+            }
         }
         if (commentContentElement) {
             if (commentData.deleteDate) {

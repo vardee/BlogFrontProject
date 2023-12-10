@@ -20,14 +20,8 @@ export const displayAuthors = async () => {
 
     try {
         const authorData: AuthorsData[] = await getAuthorsList();
-
-        const sortedAuthors = authorData.sort((a, b) => {
-            const aPopularity = a.posts * 10 + a.likes;
-            const bPopularity = b.posts * 10 + b.likes;
-            return bPopularity - aPopularity;
-        });
-
-        const mostPopularAuthors = sortedAuthors.slice(0, 3);
+        
+        const mostPopularAuthors = findMostPopularAuthors(authorData, 3);
 
         authorData.forEach(async (author: AuthorsData) => {
             const authorInstance = document.importNode(authorTemplate.content, true);
@@ -42,10 +36,11 @@ export const displayAuthors = async () => {
             const goldCrown = authorInstance.querySelector('.crowned-avatar.gold') as HTMLImageElement;
             const silverCrown = authorInstance.querySelector('.crowned-avatar.silver') as HTMLImageElement;
             const bronzeCrown = authorInstance.querySelector('.crowned-avatar.bronze') as HTMLImageElement;
-            if(authorInfo){
+            
+            if (authorInfo) {
                 authorInfo.dataset.authorName = author.fullName;
             }
-            if(authorName){
+            if (authorName) {
                 authorName.textContent = author.fullName;
             }
             if (createdDate) {
@@ -68,13 +63,15 @@ export const displayAuthors = async () => {
             } else {
                 avatarImage.src = 'default.png';
             }
-            
-            if (mostPopularAuthors[0] === author) {
-                goldCrown.style.display = 'block';
-            } else if (mostPopularAuthors[1] === author) {
-                silverCrown.style.display = 'block';
-            } else if (mostPopularAuthors[2] === author) {
-                bronzeCrown.style.display = 'block';
+
+            if (mostPopularAuthors.includes(author)) {
+                if (mostPopularAuthors[0] === author) {
+                    goldCrown.style.display = 'block';
+                } else if (mostPopularAuthors[1] === author) {
+                    silverCrown.style.display = 'block';
+                } else if (mostPopularAuthors[2] === author) {
+                    bronzeCrown.style.display = 'block';
+                }
             }
 
             authorsContainer.appendChild(authorInstance);
@@ -82,4 +79,12 @@ export const displayAuthors = async () => {
     } catch (error) {
         console.error('Ошибка при отображении сообществ:', (error as Error).message);
     }
+};
+
+const findMostPopularAuthors = (authors: AuthorsData[], count: number): AuthorsData[] => {
+    return authors.slice().sort((a, b) => {
+        const aPopularity = a.posts * 10 + a.likes;
+        const bPopularity = b.posts * 10 + b.likes;
+        return bPopularity - aPopularity;
+    }).slice(0, count);
 };

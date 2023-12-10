@@ -34,7 +34,13 @@ export const displayComments = async (post: PostData) => {
         }
 
         if (commentDateElement) {
-            commentDateElement.textContent = await formatDateTime(commentData.createTime);
+            const formattedDate = await formatDateTime(commentData.createTime);
+
+            if (commentData.modifiedDate) {
+                commentDateElement.innerHTML = `${formattedDate} <span style="color: red;">(изменен)</span>`;
+            } else {
+                commentDateElement.textContent = formattedDate;
+            }
         }
 
         if (commentContentElement) {

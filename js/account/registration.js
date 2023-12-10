@@ -1,3 +1,4 @@
+// registration.js
 import { validateRegistrationData } from "../additionService/informationValidation.js";
 const requestRegisterURL = "https://blog.kreosoft.space/api/account/register";
 document.getElementById('registrationForm')?.addEventListener('submit', function (event) {
@@ -43,7 +44,7 @@ document.getElementById('registrationForm')?.addEventListener('submit', function
         .then(data => {
         localStorage.setItem('token', data.token);
         console.log('Регистрация успешна:', data);
-        window.history.pushState({}, '', `/`);
+        window.location.reload();
     })
         .catch(error => {
         console.error('Ошибка регистрации:', error.message);
