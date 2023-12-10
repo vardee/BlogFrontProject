@@ -1,4 +1,6 @@
-interface PostData {
+import { validatePostData } from "./validationCreatePost.js";
+
+export interface PostData {
     title: string;
     description: string;
     image?: string;
@@ -9,10 +11,17 @@ interface PostData {
 
 document.getElementById('writePostForm')?.addEventListener('submit', async function (event) {
     event.preventDefault();
+    const errorMessageElement = document.getElementById('error-message');
+    if (!errorMessageElement) {
+        console.error('Error message element not found');
+        return;
+    }
+
     const token = localStorage.getItem('token');
 
     if (!token) {
-        console.log('Пользователь не авторизован');
+        errorMessageElement.textContent = 'Пользователь не авторизован';
+        errorMessageElement.style.display = 'block';
         return;
     }
 
@@ -38,8 +47,14 @@ document.getElementById('writePostForm')?.addEventListener('submit', async funct
     if (address) {
         requestData.addressId = address;
     }
+    const validationResults = validatePostData(requestData);
 
-    // Получение ID выбранной группы
+    if (!validationResults.isValid) {
+        errorMessageElement.textContent = validationResults.errors.join('\n');
+        errorMessageElement.style.display = 'block';
+        return;
+    }
+
     const selectedCommunityId = communitiesSelect.value;
     console.log(selectedCommunityId);
 
@@ -72,7 +87,7 @@ document.getElementById('writePostForm')?.addEventListener('submit', async funct
         window.location.href = '/';
     } catch (error) {
         console.error('Ошибка создания поста:', (error as Error).message);
+        errorMessageElement.textContent = 'Ошибка создания поста: ' + (error as Error).message;
+        errorMessageElement.style.display = 'block';
     }
 });
-
-

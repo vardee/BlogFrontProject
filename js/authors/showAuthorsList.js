@@ -36,6 +36,9 @@ export const displayAuthors = async () => {
             if (authorInfo) {
                 authorInfo.dataset.authorName = author.fullName;
             }
+            if (authorName) {
+                authorName.textContent = author.fullName;
+            }
             if (createdDate) {
                 createdDate.textContent = await formatDateTimeAuthors(author.created);
             }

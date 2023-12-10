@@ -1,9 +1,15 @@
-"use strict";
+import { validatePostData } from "./validationCreatePost.js";
 document.getElementById('writePostForm')?.addEventListener('submit', async function (event) {
     event.preventDefault();
+    const errorMessageElement = document.getElementById('error-message');
+    if (!errorMessageElement) {
+        console.error('Error message element not found');
+        return;
+    }
     const token = localStorage.getItem('token');
     if (!token) {
-        console.log('Пользователь не авторизован');
+        errorMessageElement.textContent = 'Пользователь не авторизован';
+        errorMessageElement.style.display = 'block';
         return;
     }
     const postTitle = document.getElementById('postTitle').value;
@@ -26,7 +32,12 @@ document.getElementById('writePostForm')?.addEventListener('submit', async funct
     if (address) {
         requestData.addressId = address;
     }
-    // Получение ID выбранной группы
+    const validationResults = validatePostData(requestData);
+    if (!validationResults.isValid) {
+        errorMessageElement.textContent = validationResults.errors.join('\n');
+        errorMessageElement.style.display = 'block';
+        return;
+    }
     const selectedCommunityId = communitiesSelect.value;
     console.log(selectedCommunityId);
     let writePostURL = "";
@@ -56,5 +67,7 @@ document.getElementById('writePostForm')?.addEventListener('submit', async funct
     }
     catch (error) {
         console.error('Ошибка создания поста:', error.message);
+        errorMessageElement.textContent = 'Ошибка создания поста: ' + error.message;
+        errorMessageElement.style.display = 'block';
     }
 });

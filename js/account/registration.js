@@ -1,4 +1,4 @@
-"use strict";
+import { validateRegistrationData } from "../additionService/informationValidation.js";
 const requestRegisterURL = "https://blog.kreosoft.space/api/account/register";
 document.getElementById('registrationForm')?.addEventListener('submit', function (event) {
     event.preventDefault();
@@ -13,6 +13,12 @@ document.getElementById('registrationForm')?.addEventListener('submit', function
     const datetime = document.getElementById('datetime').value;
     const gender = document.getElementById('gender').value;
     const phone = document.getElementById('phone').value;
+    const validationErrors = validateRegistrationData(username, password, email, phone);
+    if (validationErrors) {
+        errorMessageElement.textContent = validationErrors;
+        errorMessageElement.style.display = 'block';
+        return;
+    }
     const requestData = {
         fullName: username,
         password: password,

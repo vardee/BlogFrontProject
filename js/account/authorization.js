@@ -1,6 +1,6 @@
 import { updateNavbar } from "../spa/navbar.js";
 const requestAuthURL = "https://blog.kreosoft.space/api/account/login";
-document.getElementById('authorizationForm')?.addEventListener('submit', function (event) {
+document.getElementById('authorizationForm')?.addEventListener('submit', async function (event) {
     event.preventDefault();
     const errorMessageElement = document.getElementById('error-message');
     if (!errorMessageElement) {
@@ -15,28 +15,32 @@ document.getElementById('authorizationForm')?.addEventListener('submit', functio
         email: email,
         password: password
     };
-    fetch(requestAuthURL, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(requestData),
-    })
-        .then(response => {
+    try {
+        const response = await fetch(requestAuthURL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(requestData),
+        });
         if (!response.ok) {
-            throw new Error('Сетевой ответ не был успешным');
+            const errorData = await response.json();
+            throw new Error(errorData.message || 'Сетевой ответ не был успешным');
         }
-        return response.json();
-    })
-        .then(data => {
+        const data = await response.json();
         localStorage.setItem('token', data.token);
         console.log('Авторизация успешна:', data);
-        window.location.href = ("/");
+        window.location.href = "/";
         updateNavbar();
-    })
-        .catch(error => {
-        console.error('Ошибка регистрации:', error.message);
-        errorMessageElement.textContent = 'Ошибка регистрации: ' + error.message;
+    }
+    catch (error) {
+        console.error('Ошибка авторизации:', error.message);
+        if (error.message === 'Неверный email или пароль') {
+            errorMessageElement.textContent = error.message;
+        }
+        else {
+            errorMessageElement.textContent = 'Ошибка авторизации: Неверный email или пароль';
+        }
         errorMessageElement.style.display = 'block';
-    });
+    }
 });
